@@ -2,12 +2,16 @@
   margin: 0;
   padding: 0;
 }
+body{
+  background-color: #96a8e8;
+}
 .header{
+  font-family: 'Lobster', cursive;
   text-align: center;
   width: 100%;
   background-color: #152661;
-  margin-top: 0;
   color: white;
+  padding: 0.7%;
 }
 .navigation{
   width: 25%;
@@ -39,9 +43,6 @@
 }
 .year-input{
   width: 50px;
-  display: block;
-}
-.search-button{
   display: block;
 }
 .footer{
