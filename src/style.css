@@ -18,13 +18,6 @@ body{
   background-color: #3d486c;
   color: white;
 }
-.transport{
-  display: block;
-}
-.search-button{
-  display: flex;
-  align-items: center;
-}
 .choice{
   display: block;
 }
