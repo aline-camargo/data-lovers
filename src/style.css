@@ -2,8 +2,12 @@
   margin: 0;
   padding: 0;
 }
+html{
+  height: 100%;
+}
 body{
   background-color: #96a8e8;
+  height: 100%;
 }
 .header{
   font-family: 'Lobster', cursive;
@@ -15,20 +19,44 @@ body{
 }
 .navigation{
   width: 25%;
+  height: 100%;
   background-color: #3d486c;
   color: white;
 }
+.title-filter{
+  font-family: "Prompt", sans-serif;
+  font-weight: bold;
+  padding-top: 5%;
+  text-align: center;
+}
+.choice{
+  display: block;
+  margin-top: 0;
+}
 .button-year{
   padding: 5px 12px;
+  width: 40%;
   border-radius: 200px;
   font-family: "Prompt", sans-serif;
   font-size: 12px;
-  margin-top: 60px;
-  margin-left: 20px;
-  margin-bottom: 20px;
+  margin: 5% 13px;
 }
-.period{
-  padding: 5px 32px;
+.years-labels{
+  display: block;
+  font-family: "Prompt", sans-serif;
+  text-align: center;
+}
+.years-united{
+  display: inline-block;
+  margin-bottom: 5%;
+  margin-left: 15%;
+}
+.year-input{
+  width: 70px;
+}
+.transport{
+  margin-left: 30%;
+  font-family: "Prompt", sans-serif;
 }
 .search-button{
   padding: 5px 15px;
@@ -36,13 +64,7 @@ body{
   font-family: "Prompt", sans-serif;
   font-size: 12px;
   margin-top: 20px;
-  margin-left: 112px;
-}
-.choice{
-  display: block;
-}
-.year-input{
-  width: 50px;
+  margin-left: 35%;
   display: block;
 }
 .footer{
