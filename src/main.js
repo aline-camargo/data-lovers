@@ -9,3 +9,8 @@ const enable = () =>{
 };
 
 document.getElementById("period").addEventListener("click", enable);
+
+const search = () =>{
+  const initialYear = document.getElementById("initial-year");
+}
+document.getElementById("search").addEventListener("click", search);

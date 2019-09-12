@@ -14,6 +14,26 @@
   background-color: #3d486c;
   color: white;
 }
+.button-year{
+  padding: 5px 12px;
+  border-radius: 200px;
+  font-family: "Prompt", sans-serif;
+  font-size: 12px;
+  margin-top: 60px;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+.period{
+  padding: 5px 32px;
+}
+.search-button{
+  padding: 5px 15px;
+  border-radius: 200px;
+  font-family: "Prompt", sans-serif;
+  font-size: 12px;
+  margin-top: 20px;
+  margin-left: 112px;
+}
 .choice{
   display: block;
 }

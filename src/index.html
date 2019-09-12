@@ -9,14 +9,12 @@
     <div id="root"></div>
     <header class="header">
       <h1>Why Be Safe</h1>
-      <h2>Olá</h2>
     </header>
     <nav class="navigation">
-      <a href="#">Página inicial</a>
-        <div class="choice">
-          <button type="button" name="button" id="one-year">Apenas um ano</button>
-          <button type="button" name="button" id="period">Período</button>
-        </div>
+      <div class="choice">
+         <button type="button" class="button-year" name="button" id="one-year">Apenas um ano</button>
+         <button type="button" class="button-year period" name="button" id="period">Período</button>
+      </div>
       <label for="initial-year">Ano Inicial:</label>
       <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year">
       <label for="final-year">Ano Final:</label>
@@ -27,7 +25,6 @@
         <option value="all">Todos</option>
       </select>
       <button type="button" name="search" class="search-button"id="search">Buscar</button>
-      <a href="#">Sobre</a>
     </nav>
     <main>
       <!-- <table>
