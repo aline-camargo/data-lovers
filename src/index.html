@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <title>Data Lovers</title>
     <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Prompt&display=swap" rel="stylesheet">
   </head>
   <body>
     <div id="root"></div>
@@ -11,7 +12,6 @@
       <h1>Why Be Safe</h1>
     </header>
     <nav class="navigation">
-      <a href="#">Página inicial</a>
         <div class="choice">
           <button type="button" name="button" id="one-year">Apenas um ano</button>
           <button type="button" name="button" id="period">Período</button>
@@ -20,20 +20,18 @@
       <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year">
       <label for="final-year">Ano Final:</label>
       <input type="number" name="final-year" class="year-input" min="2000" max="2016" id="final-year">
-      <select class="transport" name="transport" id="transport">
+      <select class="transport" name="transport" id="transport" class="transport">
         <option value="car">Carro</option>
         <option value="motorcycle">Motocicleta</option>
         <option value="all">Todos</option>
       </select>
       <button type="button" name="search" class="search-button"id="search">Buscar</button>
-      <a href="#">Sobre</a>
     </nav>
     <main>
       <!-- <table>
         Tabela de dados
       </table> -->
     </main>
-    <footer class="footer">Laboratória</footer>
     <script src="data/injuries/injuries.js"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
