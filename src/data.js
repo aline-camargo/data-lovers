@@ -1,8 +1,9 @@
-// esta é uma função de exemplo
-// veja como agregamos a função ao objeto global window
+window.INJURIES = INJURIES;
 
-const example = () => {
-  return "example";
-};
+const filterPeriod = (initialYear, finalYear) => {
+const period = INJURIES.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear && injurie.Year.slice(0, 4) <= finalYear));
 
-window.example = example;
+  return period;
+}; 
+
+window.filterPeriod = filterPeriod;

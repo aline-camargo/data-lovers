@@ -1685,3 +1685,5 @@ const INJURIES = [
     Year: "2016-01-04"
   }
 ];
+
+window.INJURIES = INJURIES; 

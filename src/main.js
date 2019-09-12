@@ -17,7 +17,7 @@ const search = () =>{
   if (finalYear === 0) {
     finalYear = initialYear;
   }
-  //chamar função filtrar
+  console.log(window.filterPeriod(initialYear, finalYear));
 };
 
 document.getElementById("search").addEventListener("click", search);
