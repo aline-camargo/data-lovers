@@ -11,6 +11,13 @@ const enable = () =>{
 document.getElementById("period").addEventListener("click", enable);
 
 const search = () =>{
-  const initialYear = document.getElementById("initial-year");
-}
+  const initialYear = Number(document.getElementById("initial-year").value);
+  let finalYear = Number(document.getElementById("final-year").value);
+
+  if (finalYear === 0) {
+    finalYear = initialYear;
+  }
+  //chamar função filtrar
+};
+
 document.getElementById("search").addEventListener("click", search);
