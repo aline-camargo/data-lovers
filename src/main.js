@@ -2,28 +2,28 @@ const initialTable = () =>{
   carsTd();
   motosTd();
   allTd();
-}
+};
 
 const allTd = () =>{
   const allAccidents = window.carsTotalAccidents() + window.motosTotalAccidents();
   const newTd = document.createElement("td");
   newTd.innerHTML = allAccidents;
   document.getElementById("total-results").appendChild(newTd);
-}
+};
 
 const carsTd = () =>{
   const carAccidents = window.carsTotalAccidents();
   const newTd = document.createElement("td");
   newTd.innerHTML = carAccidents;
   document.getElementById("total-results").appendChild(newTd);
-}
+};
 
 const motosTd = () =>{
   const motosAccidents = window.motosTotalAccidents();
   const newTd = document.createElement("td");
   newTd.innerHTML = motosAccidents;
   document.getElementById("total-results").appendChild(newTd);
-}
+};
 
 const disable = () =>{
   document.getElementById("final-year").setAttribute("disabled", "");
@@ -45,9 +45,11 @@ const search = () =>{
   if (finalYear === 0) {
     finalYear = initialYear;
   }
-  const result = window.filterPeriod(initialYear, finalYear, selectTransport);
 
-  console.log(result);
+  const period = window.filterPeriod(initialYear, finalYear);
+  const periodAndTransport = window.filterTransport(period, selectTransport);
+  const accidentsTotal = window.totalAccidentsPeriodTransport(periodAndTransport);
+  const years = window.filterYears(period);
 };
 
 window.addEventListener("load", initialTable);
