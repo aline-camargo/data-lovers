@@ -1,23 +1,57 @@
-*{
+/* *{
   margin: 0;
   padding: 0;
-}
+} */
 html{
   height: 100%;
 }
 body{
   background-color: #96a8e8;
   height: 100%;
+  margin: 0;
+  padding: 0;
+}
+td{
+
 }
 .header{
+  float: left;
   font-family: 'Lobster', cursive;
   text-align: center;
   width: 100%;
   background-color: #152661;
   color: white;
-  padding: 0.7%;
+  height: 60px;
+}
+.title-page{
+  margin: 0.5% auto;
+}
+.principal{
+  float: right;
+  margin: 2.5%;
+  width: 70%;
+}
+.apresentacao{
+  font-family: "Prompt", sans-serif;
+  color: white;
+  text-shadow: 4px 2px 3px #808080;
+  text-align: right;
+  margin-bottom: 10%;
+}
+.main-table{
+  text-align: center;
+  border-collapse: collapse;
+  height: 100px;
+  width: 500px;
+  border: 1px solid black;
+  padding: 3px;
+}
+.table-head{
+  color: #662200;
+  font-size: large;
 }
 .navigation{
+  float: left;
   width: 25%;
   height: 100%;
   background-color: #3d486c;
@@ -26,8 +60,9 @@ body{
 .title-filter{
   font-family: "Prompt", sans-serif;
   font-weight: bold;
-  padding-top: 5%;
   text-align: center;
+  margin-top: 4%;
+  margin-bottom: 0;
 }
 .choice{
   display: block;
@@ -53,6 +88,7 @@ body{
 }
 .year-input{
   width: 70px;
+  text-align: center;
 }
 .transport{
   margin-left: 30%;
