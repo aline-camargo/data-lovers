@@ -45,15 +45,12 @@ const search = () =>{
   if (finalYear === 0) {
     finalYear = initialYear;
   }
-  const result = window.filterPeriod(initialYear, finalYear, selectTransport); 
+  const result = window.filterPeriod(initialYear, finalYear, selectTransport);
 
   console.log(result);
-  //const console = result.map(console.log());
-  //return console;
 };
 
 window.addEventListener("load", initialTable);
 document.getElementById("one-year").addEventListener("click", disable);
 document.getElementById("period").addEventListener("click", enable);
 document.getElementById("search").addEventListener("click", search);
-
