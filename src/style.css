@@ -11,6 +11,9 @@ body{
   margin: 0;
   padding: 0;
 }
+td{
+
+}
 .header{
   float: left;
   font-family: 'Lobster', cursive;
@@ -26,7 +29,6 @@ body{
 .principal{
   float: right;
   margin: 2.5%;
-  text-align: -webkit-center;
   width: 70%;
 }
 .apresentacao{
@@ -38,6 +40,11 @@ body{
 }
 .main-table{
   text-align: center;
+  border-collapse: collapse;
+  height: 100px;
+  width: 500px;
+  border: 1px solid black;
+  padding: 3px;
 }
 .table-head{
   color: #662200;
