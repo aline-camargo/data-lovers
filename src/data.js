@@ -1,7 +1,7 @@
-window.INJURIES = INJURIES;
+const injurieAccidents = INJURIES;
 
 const filterPeriod = (initialYear, finalYear) => {
-  const period = INJURIES.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear && injurie.Year.slice(0, 4) <= finalYear));
+  const period = injurieAccidents.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear && injurie.Year.slice(0, 4) <= finalYear));
   return period;
 };
 
@@ -10,19 +10,21 @@ const filterYears = (period) => {
   return years;
 };
 
+const carAccidents = ["Total_Injured_Persons_Passenger_Car_Occupants", "Total_Injured_Persons_Passenger_Or_Occupant"];
+const motoAccidents = ["Total_Injured_Persons_Motorcyclists"];
+
 const filterTransport = (period, selectTransport) => {
-  if (selectTransport == "car") {
+  if (selectTransport == "Carro") {
     const injuriecar = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]]);
     return injuriecar;
 
-  } else if (selectTransport == "motorcycle") {
-    const injuriemoto = period.map(injurie => injurie.Total_Injured_Persons_Motorcyclists);
+  } else if (selectTransport == "Moto") {
+    const injuriemoto = period.map(injurie => injurie[motoAccidents]);
     return injuriemoto;
 
-  } else if (selectTransport == "all") {
-    const injuriecar = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]]);
-    const injuriemoto = period.map(injurie => injurie.Total_Injured_Persons_Motorcyclists);
-    return injuriecar.concat(injuriemoto);
+  } else if (selectTransport == "Todos") {
+    const injurieCarAndMoto = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]] + injurie[motoAccidents]);
+    return injurieCarAndMoto;
   }
 };
 
@@ -31,26 +33,24 @@ const totalAccidentsPeriodTransport = (injurie) => {
   return carsTotalPeriod;
 };
 
-const carAccidents = ["Total_Injured_Persons_Passenger_Car_Occupants",
-"Total_Injured_Persons_Passenger_Or_Occupant"];
-
 const carsTotalAccidents = () =>{
-  const cars = INJURIES.reduce(
+  const cars = injurieAccidents.reduce(
     (total, year) => total + year[carAccidents[0]] + year[carAccidents[1]],
     0);
   return cars;
 };
 
 const motosTotalAccidents = () =>{
-  const motos = INJURIES.reduce(
-    (total, year) => total + year.Total_Injured_Persons_Motorcyclists,
-    0);
+  const motos = injurieAccidents.reduce(
+    (total, year) => total + year[motoAccidents], 0);
   return motos;
 };
 
-window.filterPeriod = filterPeriod;
-window.carsTotalAccidents = carsTotalAccidents;
-window.motosTotalAccidents = motosTotalAccidents;
-window.filterTransport = filterTransport;
-window.totalAccidentsPeriodTransport = totalAccidentsPeriodTransport;
-window.filterYears = filterYears;
+window.data = {
+  filterPeriod,
+  carsTotalAccidents,
+  filterTransport,
+  totalAccidentsPeriodTransport,
+  filterYears,
+  motosTotalAccidents
+};
