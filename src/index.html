@@ -21,18 +21,18 @@
         <div class="">
           <div class="years-united">
             <label for="initial-year" class="years-labels" id="initial-year-label">Ano Inicial</label>
-            <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year">
+            <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year" value="2000">
           </div>
           <div class="years-united">
             <label for="final-year" class="years-labels" id="final-year-label">Ano Final</label>
-            <input type="number" name="final-year" class="year-input" min="2000" max="2016" id="final-year">
+            <input type="number" name="final-year" class="year-input" min="2000" max="2016" id="final-year" value="2005">
           </div>
         </div>
           <select class="transport" name="transport" id="transport" class="transport">
           <option value="transport" disabled selected>Transporte</option>
-          <option value="car">Carros</option>
-          <option value="motorcycle">Motos</option>
-          <option value="all">Todos</option>
+          <option value="Carro">Carros</option>
+          <option value="Moto">Motos</option>
+          <option value="Todos">Todos</option>
         </select>
         <button type="button" name="search" class="search-button"id="search">Buscar</button>
       </form>
@@ -45,12 +45,18 @@
         <thead class="table-head">
           <th colspan="3">Número de Acidentes de 2000 a 2016</th>
         </thead>
-        <tr>
-          <td>Carros</td>
-          <td>Motos</td>
-          <td>Todos</td>
-        </tr>
-        <tr id="total-results"></tr>
+        <tbody>
+          <tr>
+            <td>Carros</td>
+            <td>Motos</td>
+            <td>Todos</td>
+          </tr>
+          <tr id="total-results"></tr>
+        </tbody>
+      </table>
+      <table>
+        <thead id="tableHead"></thead>
+        <tbody id="tableBody"></tbody>
       </table>
     </main>
     <script src="data/injuries/injuries.js"></script>

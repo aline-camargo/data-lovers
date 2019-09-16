@@ -5,21 +5,21 @@ const initialTable = () =>{
 };
 
 const allTd = () =>{
-  const allAccidents = window.carsTotalAccidents() + window.motosTotalAccidents();
+  const allAccidents = window.data.carsTotalAccidents() + window.data.motosTotalAccidents();
   const newTd = document.createElement("td");
   newTd.innerHTML = allAccidents;
   document.getElementById("total-results").appendChild(newTd);
 };
 
 const carsTd = () =>{
-  const carAccidents = window.carsTotalAccidents();
+  const carAccidents = window.data.carsTotalAccidents();
   const newTd = document.createElement("td");
   newTd.innerHTML = carAccidents;
   document.getElementById("total-results").appendChild(newTd);
 };
 
 const motosTd = () =>{
-  const motosAccidents = window.motosTotalAccidents();
+  const motosAccidents = window.data.motosTotalAccidents();
   const newTd = document.createElement("td");
   newTd.innerHTML = motosAccidents;
   document.getElementById("total-results").appendChild(newTd);
@@ -46,10 +46,21 @@ const search = () =>{
     finalYear = initialYear;
   }
 
-  const period = window.filterPeriod(initialYear, finalYear);
-  const periodAndTransport = window.filterTransport(period, selectTransport);
-  const accidentsTotal = window.totalAccidentsPeriodTransport(periodAndTransport);
-  const years = window.filterYears(period);
+  const period = window.data.filterPeriod(initialYear, finalYear);
+  const periodAndTransport = window.data.filterTransport(period, selectTransport);
+  const accidentsTotal = window.data.totalAccidentsPeriodTransport(periodAndTransport);
+  const years = window.data.filterYears(period);
+  
+  resultTable(periodAndTransport, accidentsTotal, years, selectTransport);
+};
+
+const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport) =>{
+  document.getElementById("tableHead").innerHTML = `Acidentes de ${selectTransport}`;
+
+  for (let index in years) {
+    document.getElementById("tableBody").innerHTML += `<tr><td>${years[index]}</td><td>${periodAndTransport[index]}</td></tr>`;
+  }
+  document.getElementById("tableBody").innerHTML += `<tr><td>Total</td><td>${accidentsTotal}</td></tr>`;
 };
 
 window.addEventListener("load", initialTable);
