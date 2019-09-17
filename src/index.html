@@ -7,17 +7,18 @@
     <link href="https://fonts.googleapis.com/css?family=Lobster|Prompt:400,700&display=swap" rel="stylesheet">
   </head>
   <body>
-    <div id="root"></div>
     <header class="header">
       <h1 class="title-page">Why Be Safe</h1>
     </header>
     <nav class="navigation">
       <form class="">
         <h2 class="title-filter">Filtrar</h2>
-        <div>
-           <button type="button" class="button-year one" name="button" id="one-year">Apenas um ano</button>
-           <button type="button" class="button-year" name="button" id="period">Período</button>
-        </div>
+        <fieldset class="choice">
+           <input type="radio" class="radio-year" name="radio" id="one-year">
+           <label for="one-year" class="label-year one">Apenas um ano</label>
+           <input type="radio" class="radio-year" name="radio" id="period" checked>
+           <label for="period" class="label-year">Período</label>
+        </fieldset>
         <div class="">
           <div class="years-united">
             <label for="initial-year" class="years-labels" id="initial-year-label">Ano Inicial</label>
@@ -29,7 +30,7 @@
           </div>
         </div>
           <select class="transport" name="transport" id="transport" class="transport">
-          <option value="transport" disabled selected>Transporte</option>
+          <option value="identificator" disabled selected>Transporte</option>
           <option value="Carro">Carros</option>
           <option value="Moto">Motos</option>
           <option value="Todos">Todos</option>
@@ -41,22 +42,26 @@
       <h3 class="apresentacao">Site dedicado a disponibilização de dados referentes a <br>
         acidentes de trânsito envolvendo carros e motos no período de 2000 a 2016.
       </h3>
-      <table class="main-table">
-        <thead class="table-head">
-          <th colspan="3">Número de Acidentes de 2000 a 2016</th>
+      <table class="main-table" id="main-table">
+        <thead>
+          <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2016</th>
         </thead>
         <tbody>
-          <tr>
+          <tr class="main-table-subtitle">
             <td>Carros</td>
             <td>Motos</td>
-            <td>Todos</td>
+            <td>Ambos</td>
           </tr>
-          <tr id="total-results"></tr>
+          <tr id="initial-total-results" class="main-table-content"></tr>
         </tbody>
       </table>
       <table>
         <thead id="tableHead"></thead>
         <tbody id="tableBody"></tbody>
+      </table>
+      <table>
+        <thead id="table-head"></thead>
+        <tbody id="table-body"></tbody>
       </table>
     </main>
     <script src="data/injuries/injuries.js"></script>
