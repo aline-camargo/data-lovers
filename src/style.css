@@ -31,6 +31,7 @@ body{
   text-align: right;
   margin-bottom: 10%;
 }
+
 .main-table{
   text-align: center;
   border-collapse: collapse;
@@ -40,6 +41,7 @@ body{
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   font-family: "Prompt", sans-serif;
 }
+
 .main-table-head{
   color: white;
   font-size: large;
