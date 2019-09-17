@@ -16,6 +16,9 @@ body{
   color: white;
   height: 60px;
 }
+.container{
+  height: 100%;
+}
 .title-page{
   margin: 0.5% auto;
 }
@@ -31,7 +34,6 @@ body{
   text-align: right;
   margin-bottom: 10%;
 }
-
 .main-table{
   text-align: center;
   border-collapse: collapse;
@@ -41,7 +43,6 @@ body{
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   font-family: "Prompt", sans-serif;
 }
-
 .main-table-head{
   color: white;
   font-size: large;
@@ -154,13 +155,66 @@ body{
 }
 
 @media (max-width: 1280px){
+  body{
+    display: flex;
+    flex-direction: column;
+  }
+  .container{
+    display: flex;
+    flex-direction: column;
+    height: 50%;
+  }
+  .header{
+    height: 10%;
+    font-size: -webkit-xxx-large;
+  }
+  .title-page{
+    margin: 2% auto;
+  }
+  .title-filter{
+    margin-top: 1%;
+    font-size: 60px;
+  }
+  .radio-year{
+    width: 35px;
+    height: 35px;
+    border: 5px solid white;
+    margin-left: 10%;
+  }
+  .radio-year:checked {
+    border: 10px solid white;
+  }
+  .label-year{
+    font-size: 40px;
+  }
+  .years-labels{
+    font-size: 40px;
+  }
+  .years-united{
+    width: 26%;
+  }
+  .year-input{
+    width: 100%;
+    line-height: 2.5;
+  }
+  .transport{
+    margin-left: 33%;
+    font-size: 28px;
+  }
+  .search-button{
+    font-size: 38px;
+    margin-top: 25px;
+    margin-left: 41%;
+  }
   .apresentacao{
     text-align: center;
     margin-bottom: 0;
+    font-size: 30px;
   }
   .navigation{
     width: 100%;
-    height: 37%;
+    height: 59%;
+    order: 2;
   }
   .choice{
     margin: 1% 9%;
@@ -168,15 +222,31 @@ body{
   .principal{
     margin: auto;
     width: 100%;
+    margin-bottom: 3%;
   }
   .main-table{
     width: 90%;
     margin: auto;
+  }
+  .main-table-head{
+    font-size: xx-large;
+  }
+  .main-table-subtitle{
+    font-size: 30px;
+  }
+  .main-table-content{
+    font-size: 27px;
   }
   .table-results{
     margin: auto;
     width: 90%;
     margin-top: 0;
     margin-bottom: 15px;
+  }
+  .table-title{
+    font-size: xx-large;
+  }
+  .table-body{
+    font-size: 27px;
   }
 }

@@ -10,58 +10,60 @@
     <header class="header">
       <h1 class="title-page">Why Be Safe</h1>
     </header>
-    <nav class="navigation">
-      <form class="">
-        <h2 class="title-filter">Filtrar</h2>
-        <fieldset class="choice">
-           <input type="radio" class="radio-year" name="radio" id="one-year">
-           <label for="one-year" class="label-year one">Apenas um ano</label>
-           <input type="radio" class="radio-year" name="radio" id="period" checked>
-           <label for="period" class="label-year">Período</label>
-        </fieldset>
-        <div class="">
-          <div class="years-united">
-            <label for="initial-year" class="years-labels" id="initial-year-label">Ano Inicial</label>
-            <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year" value="2000">
+    <div class="container">
+      <nav class="navigation">
+        <form class="">
+          <h2 class="title-filter">Filtrar</h2>
+          <fieldset class="choice">
+            <input type="radio" class="radio-year" name="radio" id="one-year">
+            <label for="one-year" class="label-year one">Apenas um ano</label>
+            <input type="radio" class="radio-year" name="radio" id="period" checked>
+            <label for="period" class="label-year">Período</label>
+          </fieldset>
+          <div class="">
+            <div class="years-united">
+              <label for="initial-year" class="years-labels" id="initial-year-label">Ano Inicial</label>
+              <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year" value="2000">
+            </div>
+            <div class="years-united">
+              <label for="final-year" class="years-labels" id="final-year-label">Ano Final</label>
+              <input type="number" name="final-year" class="year-input" min="2000" max="2016" id="final-year" value="2005">
+            </div>
           </div>
-          <div class="years-united">
-            <label for="final-year" class="years-labels" id="final-year-label">Ano Final</label>
-            <input type="number" name="final-year" class="year-input" min="2000" max="2016" id="final-year" value="2005">
-          </div>
-        </div>
-          <select class="transport" name="transport" id="transport" class="transport">
-          <option value="identificator" disabled selected>Transporte</option>
-          <option value="Carro">Carros</option>
-          <option value="Moto">Motos</option>
-          <option value="Todos">Todos</option>
-        </select>
-        <button type="button" name="search" class="search-button"id="search">Buscar</button>
-      </form>
-    </nav>
-    <main class="principal">
-      <h3 class="apresentacao">Site dedicado a disponibilização de dados referentes a <br>
-        acidentes de trânsito envolvendo carros e motos no período de 2000 a 2016.
-      </h3>
-      <section>
-        <table class="main-table" id="main-table">
-          <thead>
-            <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2016</th>
-          </thead>
-          <tbody>
-            <tr class="main-table-subtitle">
-              <td>Carros</td>
-              <td>Motos</td>
-              <td>Ambos</td>
-            </tr>
-            <tr id="initial-total-results" class="main-table-content"></tr>
-          </tbody>
-        </table>
-        <table class="table-results" id="table-results" hidden>
-          <thead id="t-head" class="table-title"></thead>
-          <tbody id="t-body" class="table-body"></tbody>
-        </table>
-      </section>
-    </main>
+            <select class="transport" name="transport" id="transport" class="transport">
+            <option value="identificator" disabled selected>Transporte</option>
+            <option value="Carro">Carros</option>
+            <option value="Moto">Motos</option>
+            <option value="Todos">Todos</option>
+          </select>
+          <button type="button" name="search" class="search-button"id="search">Buscar</button>
+        </form>
+      </nav>
+      <main class="principal">
+        <h3 class="apresentacao">Site dedicado a disponibilização de dados referentes a <br>
+          acidentes de trânsito envolvendo carros e motos no período de 2000 a 2016.
+        </h3>
+        <section>
+          <table class="main-table" id="main-table">
+            <thead>
+              <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2016</th>
+            </thead>
+            <tbody>
+              <tr class="main-table-subtitle">
+                <td>Carros</td>
+                <td>Motos</td>
+                <td>Ambos</td>
+              </tr>
+              <tr id="initial-total-results" class="main-table-content"></tr>
+            </tbody>
+          </table>
+          <table class="table-results" id="table-results" hidden>
+            <thead id="t-head" class="table-title"></thead>
+            <tbody id="t-body" class="table-body"></tbody>
+          </table>
+        </section>
+      </main>
+    </div>
     <script src="data/injuries/injuries.js"></script>
     <script src="data.js"></script>
     <script src="main.js"></script>
