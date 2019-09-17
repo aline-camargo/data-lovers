@@ -74,7 +74,7 @@ body{
   color: white;
   font-size: large;
 }
-.table-body tr:nth-child(2n){ 
+.table-body tr:nth-child(2n){
   background: #ccc;
 }
 .navigation{

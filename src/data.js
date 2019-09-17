@@ -1,7 +1,8 @@
 const injurieAccidents = INJURIES;
 
 const filterPeriod = (initialYear, finalYear) => {
-  const period = injurieAccidents.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear && injurie.Year.slice(0, 4) <= finalYear));
+  const period = injurieAccidents.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear
+  && injurie.Year.slice(0, 4) <= finalYear));
   return period;
 };
 
