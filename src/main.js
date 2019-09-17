@@ -55,12 +55,12 @@ const search = () =>{
 };
 
 const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport) =>{
-  document.getElementById("tableHead").innerHTML = `Acidentes de ${selectTransport}`;
+  document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
 
   for (let index in years) {
-    document.getElementById("tableBody").innerHTML += `<tr><td>${years[index]}</td><td>${periodAndTransport[index]}</td></tr>`;
+    document.getElementById("t-body").innerHTML += `<tr><td>${years[index]}</td><td>${periodAndTransport[index]}</td></tr>`;
   }
-  document.getElementById("tableBody").innerHTML += `<tr><td>Total</td><td>${accidentsTotal}</td></tr>`;
+  document.getElementById("t-body").innerHTML += `<tr><td>Total</td><td>${accidentsTotal}</td></tr>`;
 };
 
 window.addEventListener("load", initialTable);
