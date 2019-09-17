@@ -1,28 +1,12 @@
 const initialTable = () =>{
-  carsTd();
-  motosTd();
-  allTd();
-};
-
-const allTd = () =>{
-  const allAccidents = window.data.carsTotalAccidents() + window.data.motosTotalAccidents();
-  const newTd = document.createElement("td");
-  newTd.innerHTML = allAccidents;
-  document.getElementById("total-results").appendChild(newTd);
-};
-
-const carsTd = () =>{
-  const carAccidents = window.data.carsTotalAccidents();
-  const newTd = document.createElement("td");
-  newTd.innerHTML = carAccidents;
-  document.getElementById("total-results").appendChild(newTd);
-};
-
-const motosTd = () =>{
-  const motosAccidents = window.data.motosTotalAccidents();
-  const newTd = document.createElement("td");
-  newTd.innerHTML = motosAccidents;
-  document.getElementById("total-results").appendChild(newTd);
+  const initialPeriod = window.data.filterPeriod(2000, 2016);
+  const carAccidents = window.data.filterTransport(initialPeriod, "Carro");
+  const motosAccidents = window.data.filterTransport(initialPeriod, "Moto");
+  const totalCars = window.data.totalAccidentsPeriodTransport(carAccidents);
+  const totalMotos = window.data.totalAccidentsPeriodTransport(motosAccidents);
+  const accidentsTotal = totalCars + totalMotos
+  document.getElementById("initial-total-results").innerHTML = `<td>${totalCars}</td>
+    <td>${totalMotos}</td><td>${accidentsTotal}</td>`;
 };
 
 const disable = () =>{
@@ -38,11 +22,12 @@ const enable = () =>{
 };
 
 const search = () =>{
+  document.getElementById("main-table").setAttribute("hidden", "");
   const initialYear = Number(document.getElementById("initial-year").value);
   let finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
 
-  if (finalYear === 0) {
+  if (document.getElementById("one-year").checked) {
     finalYear = initialYear;
   }
 
@@ -50,11 +35,16 @@ const search = () =>{
   const periodAndTransport = window.data.filterTransport(period, selectTransport);
   const accidentsTotal = window.data.totalAccidentsPeriodTransport(periodAndTransport);
   const years = window.data.filterYears(period);
-  
-  resultTable(periodAndTransport, accidentsTotal, years, selectTransport);
+
+  if(selectTransport == "Todos"){
+    moreThanOneTable(period, years);
+  } else {
+    resultTable(periodAndTransport, accidentsTotal, years, selectTransport);
+  }
 };
 
 const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport) =>{
+
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
 
   for (let index in years) {
@@ -63,7 +53,23 @@ const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport)
   document.getElementById("t-body").innerHTML += `<tr><td>Total</td><td>${accidentsTotal}</td></tr>`;
 };
 
+const moreThanOneTable = (period, years) =>{
+
+  const carAccidents = window.data.filterTransport(period, "Carro");
+  const motosAccidents = window.data.filterTransport(period, "Moto");
+  const allAccidents = window.data.filterTransport(period, "Todos");
+
+  document.getElementById("table-head").innerHTML = `<tr><th>Ano</th><th>Carro</th>
+    <th>Moto</th><th>Todos</th></tr>`;
+
+  for (let index in years) {
+    document.getElementById("table-body").innerHTML += `<tr><td>${years[index]}</td><td>${carAccidents[index]}</td>
+      <td>${motosAccidents[index]}</td><td>${allAccidents[index]}</td></tr>`;
+  }
+
+};
+
 window.addEventListener("load", initialTable);
-document.getElementById("one-year").addEventListener("click", disable);
-document.getElementById("period").addEventListener("click", enable);
+document.getElementById("one-year").addEventListener("change", disable);
+document.getElementById("period").addEventListener("change", enable);
 document.getElementById("search").addEventListener("click", search);
