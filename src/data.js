@@ -24,6 +24,7 @@ const filterTransport = (period, selectTransport) => {
 
   } else if (selectTransport == "Todos") {
     const injurieCarAndMoto = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]] + injurie[motoAccidents]);
+    console.log(injurieCarAndMoto);
     return injurieCarAndMoto;
   }
 };
@@ -33,24 +34,9 @@ const totalAccidentsPeriodTransport = (injurie) => {
   return carsTotalPeriod;
 };
 
-const carsTotalAccidents = () =>{
-  const cars = injurieAccidents.reduce(
-    (total, year) => total + year[carAccidents[0]] + year[carAccidents[1]],
-    0);
-  return cars;
-};
-
-const motosTotalAccidents = () =>{
-  const motos = injurieAccidents.reduce(
-    (total, year) => total + year[motoAccidents], 0);
-  return motos;
-};
-
 window.data = {
   filterPeriod,
-  carsTotalAccidents,
   filterTransport,
   totalAccidentsPeriodTransport,
   filterYears,
-  motosTotalAccidents
 };
