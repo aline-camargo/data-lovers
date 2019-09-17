@@ -30,7 +30,7 @@
           </div>
         </div>
           <select class="transport" name="transport" id="transport" class="transport">
-          <option value="transport" disabled selected>Transporte</option>
+          <option value="identificator" disabled selected>Transporte</option>
           <option value="Carro">Carros</option>
           <option value="Moto">Motos</option>
           <option value="Todos">Todos</option>
@@ -43,16 +43,16 @@
         acidentes de trânsito envolvendo carros e motos no período de 2000 a 2016.
       </h3>
       <table class="main-table" id="main-table">
-        <thead class="table-head" id="initial-table-head">
-          <th colspan="3">Número Total de Acidentes de 2000 a 2016</th>
+        <thead>
+          <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2016</th>
         </thead>
         <tbody>
-          <tr>
+          <tr class="main-table-subtitle">
             <td>Carros</td>
             <td>Motos</td>
             <td>Ambos</td>
           </tr>
-          <tr id="initial-total-results"></tr>
+          <tr id="initial-total-results" class="main-table-content"></tr>
         </tbody>
       </table>
       <table>
