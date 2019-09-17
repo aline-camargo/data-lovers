@@ -36,7 +36,7 @@ const search = () =>{
   const accidentsTotal = window.data.totalAccidentsPeriodTransport(periodAndTransport);
   const years = window.data.filterYears(period);
 
-  if(selectTransport == "Todos"){
+  if (selectTransport == "Todos") {
     moreThanOneTable(period, years);
   } else {
     resultTable(periodAndTransport, accidentsTotal, years, selectTransport);
@@ -46,6 +46,7 @@ const search = () =>{
 const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport) =>{
 
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
+  document.getElementById("t-body").innerHTML = "<tr><td>Ano</td><td>Total de Acidentes</td></tr>";
 
   for (let index in years) {
     document.getElementById("t-body").innerHTML += `<tr><td>${years[index]}</td><td>${periodAndTransport[index]}</td></tr>`;
