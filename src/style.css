@@ -135,7 +135,6 @@ body{
 .year-input{
   width: 70px;
   text-align: center;
-  font-size: x-large;
 }
 .transport{
   margin-left: 30%;
@@ -194,6 +193,7 @@ body{
   .year-input{
     width: 100%;
     line-height: 2.5;
+    font-size: x-large;
   }
   .transport{
     margin-left: 33%;
@@ -211,7 +211,7 @@ body{
   }
   .navigation{
     width: 100%;
-    height: 34%;
+    height: 45%;
     order: 2;
   }
   .form-filter{
