@@ -4,7 +4,7 @@ const initialTable = () =>{
   const motosAccidents = window.data.filterTransport(initialPeriod, "Moto");
   const totalCars = window.data.totalAccidentsPeriodTransport(carAccidents);
   const totalMotos = window.data.totalAccidentsPeriodTransport(motosAccidents);
-  const accidentsTotal = totalCars + totalMotos
+  const accidentsTotal = totalCars + totalMotos;
   document.getElementById("initial-total-results").innerHTML = `<td>${totalCars}</td>
     <td>${totalMotos}</td><td>${accidentsTotal}</td>`;
 };
@@ -47,7 +47,7 @@ const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport)
 
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
-  document.getElementById("t-body").innerHTML = `<tr class="main-table-subtitle"><td>Ano</td><td>Total de Acidentes</td></tr>`;
+  document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Total de Acidentes</td></tr>";
 
   for (let index in years) {
     document.getElementById("t-body").innerHTML += `<tr><td>${years[index]}</td><td>${periodAndTransport[index]}</td></tr>`;
@@ -60,16 +60,13 @@ const moreThanOneTable = (period, years) =>{
   document.getElementById("t-head").innerHTML = "";
   document.getElementById("t-body").innerHTML = "";
 
-
   document.getElementById("table-results").removeAttribute("hidden", "");
-
 
   const carAccidents = window.data.filterTransport(period, "Carro");
   const motosAccidents = window.data.filterTransport(period, "Moto");
   const allAccidents = window.data.filterTransport(period, "Todos");
 
-
-  document.getElementById("t-head").innerHTML = `<th colspan="4">Total de Acidentes</th>`
+  document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
   document.getElementById("t-body").innerHTML += `<tr class="main-table-subtitle"><td>Ano</td><td>Carro</td>
     <td>Moto</td><td>Todos</td></tr>`;
 

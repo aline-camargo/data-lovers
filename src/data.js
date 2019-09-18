@@ -25,7 +25,6 @@ const filterTransport = (period, selectTransport) => {
 
   } else if (selectTransport == "Todos") {
     const injurieCarAndMoto = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]] + injurie[motoAccidents]);
-    console.log(injurieCarAndMoto);
     return injurieCarAndMoto;
   }
 };
