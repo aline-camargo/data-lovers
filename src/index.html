@@ -23,11 +23,11 @@
           <div>
             <div class="years-united">
               <label for="initial-year" class="years-labels" id="initial-year-label">Ano Inicial</label>
-              <input type="number" name="initial-year" class="year-input" min="2000" max="2016" id="initial-year" value="2000">
+              <input type="number" name="initial-year" class="year-input" min="2000" max="2015" id="initial-year" value="2000">
             </div>
             <div class="years-united">
               <label for="final-year" class="years-labels" id="final-year-label">Ano Final</label>
-              <input type="number" name="final-year" class="year-input" min="2000" max="2016" id="final-year" value="2005">
+              <input type="number" name="final-year" class="year-input" min="2000" max="2015" id="final-year" value="2005">
             </div>
           </div>
             <select class="transport" name="transport" id="transport">
@@ -41,12 +41,17 @@
       </nav>
       <main class="principal">
         <h3 class="apresentacao">Site dedicado a disponibilização de dados referentes a <br>
-          acidentes de trânsito envolvendo carros e motos no período de 2000 a 2016.
+          acidentes de trânsito envolvendo carros e motos no período de 2000 a 2015.
         </h3>
+        <select class="order" name="order" id="order">
+          <option value="title" disabled selected>Ordenar por Ano</option>
+          <option value="recent">Mais Recente</option>
+          <option value="older">Mais Antigo</option>
+        </select>
         <section>
           <table class="main-table" id="main-table">
             <thead>
-              <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2016</th>
+              <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2015</th>
             </thead>
             <tbody>
               <tr class="main-table-subtitle">

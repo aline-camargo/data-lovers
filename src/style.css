@@ -37,6 +37,12 @@ body{
   text-align: right;
   margin-bottom: 4%;
 }
+.order{
+  font-family: "Prompt", sans-serif;
+  width: 17%;
+  margin-left: 56%;
+  margin-bottom: 1%;
+}
 .main-table{
   text-align: center;
   border-collapse: collapse;
@@ -139,7 +145,7 @@ body{
 .transport{
   margin-left: 30%;
   font-family: "Prompt", sans-serif;
-  width: 30%;
+  width: 33%;
 }
 .transport:hover{
   cursor: pointer;

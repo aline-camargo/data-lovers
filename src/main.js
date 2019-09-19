@@ -1,5 +1,5 @@
 const initialTable = () =>{
-  const initialPeriod = window.data.filterPeriod(2000, 2016);
+  const initialPeriod = window.data.filterPeriod(2000, 2015);
   const carAccidents = window.data.filterTransport(initialPeriod, "Carro");
   const motosAccidents = window.data.filterTransport(initialPeriod, "Moto");
   const totalCars = window.data.totalAccidentsPeriodTransport(carAccidents);
@@ -26,6 +26,7 @@ const search = () =>{
   const initialYear = Number(document.getElementById("initial-year").value);
   let finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
+  const order = document.getElementById("order").value;
 
   if (document.getElementById("one-year").checked) {
     finalYear = initialYear;
@@ -37,17 +38,22 @@ const search = () =>{
   const years = window.data.filterYears(period);
 
   if (selectTransport == "Todos") {
-    moreThanOneTable(period, years);
+    moreThanOneTable(period, years, order);
   } else {
-    resultTable(periodAndTransport, accidentsTotal, years, selectTransport);
+    resultTable(periodAndTransport, accidentsTotal, years, selectTransport, order);
   }
 };
 
-const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport) =>{
+const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport, order) =>{
 
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
   document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Total de Acidentes</td></tr>";
+
+  if (order == "older") {
+    periodAndTransport.reverse();
+    years.reverse();
+  }
 
   for (let index in years) {
     document.getElementById("t-body").innerHTML += `<tr><td>${years[index]}</td><td>${periodAndTransport[index]}</td></tr>`;
@@ -55,7 +61,7 @@ const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport)
   document.getElementById("t-body").innerHTML += `<tr><td>Total</td><td>${accidentsTotal}</td></tr>`;
 };
 
-const moreThanOneTable = (period, years) =>{
+const moreThanOneTable = (period, years, order) =>{
 
   document.getElementById("t-head").innerHTML = "";
   document.getElementById("t-body").innerHTML = "";
@@ -65,6 +71,14 @@ const moreThanOneTable = (period, years) =>{
   const carAccidents = window.data.filterTransport(period, "Carro");
   const motosAccidents = window.data.filterTransport(period, "Moto");
   const allAccidents = window.data.filterTransport(period, "Todos");
+
+  if (order == "older") {
+    years.reverse();
+    carAccidents.reverse();
+    motosAccidents.reverse();
+    allAccidents.reverse();
+  }
+
 
   document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
   document.getElementById("t-body").innerHTML += `<tr class="main-table-subtitle"><td>Ano</td><td>Carro</td>
@@ -78,6 +92,7 @@ const moreThanOneTable = (period, years) =>{
 };
 
 window.addEventListener("load", initialTable);
+document.getElementById("order").addEventListener("change", search);
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);
 document.getElementById("search").addEventListener("click", search);
