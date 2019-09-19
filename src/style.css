@@ -77,7 +77,6 @@ body{
   margin: 0 23%;
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   font-family: "Prompt", sans-serif;
-  margin-top: 20px;
 }
 .table-title{
   margin-top: 20px;
@@ -232,6 +231,11 @@ body{
     margin-bottom: 3%;
     margin-top: 0;
   }
+  .order{
+    font-size: 28px;
+    width: 28%;
+    margin-left: 67%;
+  }
   .main-table{
     width: 90%;
     margin: auto;
@@ -248,7 +252,6 @@ body{
   .table-results{
     margin: auto;
     width: 90%;
-    margin-top: 0;
     margin-bottom: 15px;
   }
   .table-title{
