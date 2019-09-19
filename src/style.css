@@ -197,7 +197,7 @@ body{
   }
   .year-input{
     width: 100%;
-    line-height: 2.5;
+    line-height: 1.8;
     font-size: x-large;
   }
   .transport{
@@ -233,8 +233,8 @@ body{
   }
   .order{
     font-size: 28px;
-    width: 28%;
-    margin-left: 67%;
+    width: 29%;
+    margin-left: 66%;
   }
   .main-table{
     width: 90%;
