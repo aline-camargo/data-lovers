@@ -43,12 +43,12 @@
         <h3 class="apresentacao">Site dedicado a disponibilização de dados referentes a <br>
           acidentes de trânsito envolvendo carros e motos no período de 2000 a 2015.
         </h3>
-        <select class="order" name="order" id="order">
-          <option value="title" disabled selected>Ordenar por Ano</option>
-          <option value="recent">Mais Recente</option>
-          <option value="older">Mais Antigo</option>
-        </select>
         <section>
+          <select class="order" name="order" id="order" hidden>
+            <option value="title" disabled selected>Ordenar por Ano</option>
+            <option value="recent">Mais Recente</option>
+            <option value="older">Mais Antigo</option>
+          </select>
           <table class="main-table" id="main-table">
             <thead>
               <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2015</th>
@@ -66,6 +66,7 @@
             <thead id="t-head" class="table-title"></thead>
             <tbody id="t-body" class="table-body"></tbody>
           </table>
+          <button type="button" name="button" class="average-button" id="average" hidden>Média por Ano</button>
         </section>
       </main>
     </div>

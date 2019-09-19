@@ -87,6 +87,15 @@ body{
 .table-body tr:nth-child(2n){
   background: #ccc;
 }
+.average-button{
+  width: 17%;
+  padding: 4px;
+  border-radius: 200px;
+  font-family: "Prompt", sans-serif;
+  font-size: 13px;
+  margin-top: 12px;
+  margin-left: 56%;
+}
 .navigation{
   float: left;
   width: 25%;
@@ -112,7 +121,7 @@ body{
   height: 16px;
   border-radius: 50%;
   transition: 0.2s all linear;
-  border: 3px solid white;
+  border: 2px solid white;
 }
 .radio-year:hover{
   cursor: pointer;
@@ -160,6 +169,8 @@ body{
 }
 .search-button:hover{
   cursor: pointer;
+  color: white;
+  background-color: grey;
 }
 
 @media (max-width: 1280px){

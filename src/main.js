@@ -23,6 +23,7 @@ const enable = () =>{
 
 const search = () =>{
   document.getElementById("main-table").setAttribute("hidden", "");
+  document.getElementById("order").removeAttribute("hidden", "");
   const initialYear = Number(document.getElementById("initial-year").value);
   let finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
@@ -30,6 +31,9 @@ const search = () =>{
 
   if (document.getElementById("one-year").checked) {
     finalYear = initialYear;
+    document.getElementById("average").setAttribute("hidden", "");
+  } else {
+    document.getElementById("average").removeAttribute("hidden", "");
   }
 
   const period = window.data.filterPeriod(initialYear, finalYear);
@@ -91,7 +95,23 @@ const moreThanOneTable = (period, years, order) =>{
 
 };
 
+const average = () =>{
+  const initialYear = Number(document.getElementById("initial-year").value);
+  let finalYear = Number(document.getElementById("final-year").value);
+  const selectTransport = document.getElementById("transport").value;
+
+  const period = window.data.filterPeriod(initialYear, finalYear);
+  const periodAndTransport = window.data.filterTransport(period, selectTransport);
+  const accidentsTotal = window.data.totalAccidentsPeriodTransport(periodAndTransport);
+  const divider = periodAndTransport.length;
+  const result = parseInt(accidentsTotal / divider);
+
+  console.log(result);
+}
+
+
 window.addEventListener("load", initialTable);
+document.getElementById("average").addEventListener("click", average);
 document.getElementById("order").addEventListener("change", search);
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);
