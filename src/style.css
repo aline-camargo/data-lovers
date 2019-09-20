@@ -37,15 +37,6 @@ body{
   text-align: right;
   margin-bottom: 4%;
 }
-.order{
-  font-family: "Prompt", sans-serif;
-  width: 17%;
-  margin-left: 56%;
-  margin-bottom: 1%;
-}
-.order:hover{
-  box-shadow: 0px 2px 12px rgba(0,0,0,0.6);
-}
 .main-table{
   text-align: center;
   border-collapse: collapse;
@@ -90,20 +81,8 @@ body{
 .table-body tr:nth-child(2n){
   background: #ccc;
 }
-.average-button{
-  width: 17%;
-  padding: 4px;
-  border-radius: 5%;
-  border: 1px solid white;
-  font-family: "Prompt", sans-serif;
-  font-size: 13px;
-  margin-top: 12px;
-  margin-left: 56%;
-  background-color: white;
-}
-.average-button:hover{
-  cursor: pointer;
-  box-shadow: 0px 2px 12px rgba(0,0,0,0.6);
+.total{
+  font-weight: bold;
 }
 .navigation{
   float: left;
@@ -118,6 +97,13 @@ body{
   text-align: center;
   margin-top: 4%;
   margin-bottom: 0;
+}
+.title-nav{
+  font-family: "Prompt", sans-serif;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 0;
+  font-size: 127%;
 }
 .choice{
   margin: 5%;
@@ -159,16 +145,17 @@ body{
   width: 70px;
   text-align: center;
 }
-.transport{
+.selector{
   margin-left: 30%;
   font-family: "Prompt", sans-serif;
   width: 33%;
+  margin-top: 4%;
 }
-.transport:hover{
+.selector:hover{
   cursor: pointer;
   box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
-.search-button{
+.button{
   padding: 5px 15px;
   border: 1px solid white;
   border-radius: 10%;
@@ -178,7 +165,7 @@ body{
   margin-left: 36%;
   background-color: white;
 }
-.search-button:hover{
+.button:hover{
   cursor: pointer;
   box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
@@ -221,11 +208,11 @@ body{
     line-height: 1.8;
     font-size: x-large;
   }
-  .transport{
+  .selector{
     margin-left: 33%;
     font-size: 28px;
   }
-  .search-button{
+  .button{
     font-size: 38px;
     margin-top: 25px;
     margin-left: 41%;
@@ -252,11 +239,11 @@ body{
     margin-bottom: 3%;
     margin-top: 0;
   }
-  .order{
+  /* .order{
     font-size: 28px;
     width: 29%;
     margin-left: 66%;
-  }
+  } */
   .main-table{
     width: 90%;
     margin: auto;
@@ -280,10 +267,4 @@ body{
   }
   .table-body{
     font-size: 27px;
-  }
-  .average-button{
-    margin-top: 0%;
-    margin-left: 66%;
-    font-size: 25px;
-    width: 29%;
   }

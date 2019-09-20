@@ -1,9 +1,13 @@
-const injurieAccidents = INJURIES;
+//const injurieAccidents = INJURIES;
 
-const filterPeriod = (initialYear, finalYear) => {
-  const period = injurieAccidents.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear
-  && injurie.Year.slice(0, 4) <= finalYear));
-  return period;
+const filterPeriod = (data, initialYear, finalYear) => {
+  // if (initialYear === 0 || finalYear === 0) {
+  //   return "Inválido";
+  // } else {
+    const period = data.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear
+    && injurie.Year.slice(0, 4) <= finalYear));
+    return period;
+  //}
 };
 
 const filterYears = (period) => {
@@ -34,7 +38,14 @@ const totalAccidentsPeriodTransport = (injurie) => {
   return carsTotalPeriod;
 };
 
-window.data = {
+app = {
+  filterPeriod,
+  filterTransport,
+  totalAccidentsPeriodTransport,
+  filterYears,
+};
+
+module.exports = {
   filterPeriod,
   filterTransport,
   totalAccidentsPeriodTransport,

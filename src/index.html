@@ -13,7 +13,7 @@
     <div class="container">
       <nav class="navigation">
         <form class="form-filter">
-          <h2 class="title-filter">Filtrar</h2>
+          <h2 class="title-filter">Filtrar Acidentes</h2>
           <fieldset class="choice">
             <input type="radio" class="radio-year" name="radio" id="one-year">
             <label for="one-year" class="label-year one">Apenas um ano</label>
@@ -30,25 +30,29 @@
               <input type="number" name="final-year" class="year-input" min="2000" max="2015" id="final-year" value="2005">
             </div>
           </div>
-            <select class="transport" name="transport" id="transport">
+            <select class="selector" name="transport" id="transport">
             <option value="identificator" disabled selected>Transporte</option>
             <option value="Carro">Carros</option>
             <option value="Moto">Motos</option>
             <option value="Todos">Todos</option>
           </select>
-          <button type="button" name="search" class="search-button" id="search">Buscar</button>
+          <button type="button" name="search" class="button" id="search">Buscar</button>
+          <h2 class="title-nav" id="order-title" hidden>Ordenar Acidentes por Ano</h2>
+          <select class="selector" name="order" id="order" hidden>
+            <option value="title" disabled selected>Ordenar</option>
+            <option value="recent">Mais Recente</option>
+            <option value="older">Mais Antigo</option>
+          </select>
+          <h2 class="title-nav" id="average-title" hidden>Média de Acidentes por Ano</h2>
+          <button type="button" name="button" class="button" id="average" hidden>Buscar</button>
         </form>
       </nav>
       <main class="principal">
         <h3 class="apresentacao">Site dedicado a disponibilização de dados referentes a <br>
           acidentes de trânsito envolvendo carros e motos no período de 2000 a 2015.
         </h3>
+        <p id="error-message"></p>
         <section>
-          <select class="order" name="order" id="order" hidden>
-            <option value="title" disabled selected>Ordenar por Ano</option>
-            <option value="recent">Mais Recente</option>
-            <option value="older">Mais Antigo</option>
-          </select>
           <table class="main-table" id="main-table">
             <thead>
               <th class="main-table-head" colspan="3">Número Total de Acidentes de 2000 a 2015</th>
@@ -66,7 +70,6 @@
             <thead id="t-head" class="table-title"></thead>
             <tbody id="t-body" class="table-body"></tbody>
           </table>
-          <button type="button" name="button" class="average-button" id="average" hidden>Média por Ano</button>
         </section>
       </main>
     </div>
