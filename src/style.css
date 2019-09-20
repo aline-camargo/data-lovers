@@ -281,4 +281,9 @@ body{
   .table-body{
     font-size: 27px;
   }
-}
+  .average-button{
+    margin-top: 0%;
+    margin-left: 66%;
+    font-size: 25px;
+    width: 29%;
+  }
