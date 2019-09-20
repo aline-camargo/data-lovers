@@ -43,6 +43,9 @@ body{
   margin-left: 56%;
   margin-bottom: 1%;
 }
+.order:hover{
+  box-shadow: 0px 2px 12px rgba(0,0,0,0.6);
+}
 .main-table{
   text-align: center;
   border-collapse: collapse;
@@ -90,11 +93,17 @@ body{
 .average-button{
   width: 17%;
   padding: 4px;
-  border-radius: 200px;
+  border-radius: 5%;
+  border: 1px solid white;
   font-family: "Prompt", sans-serif;
   font-size: 13px;
   margin-top: 12px;
   margin-left: 56%;
+  background-color: white;
+}
+.average-button:hover{
+  cursor: pointer;
+  box-shadow: 0px 2px 12px rgba(0,0,0,0.6);
 }
 .navigation{
   float: left;
@@ -157,20 +166,21 @@ body{
 }
 .transport:hover{
   cursor: pointer;
+  box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
 .search-button{
   padding: 5px 15px;
-  border-radius: 200px;
+  border: 1px solid white;
+  border-radius: 10%;
   font-family: "Prompt", sans-serif;
   font-size: 12px;
   margin-top: 20px;
-  margin-left: 35%;
-  display: block;
+  margin-left: 36%;
+  background-color: white;
 }
 .search-button:hover{
   cursor: pointer;
-  color: white;
-  background-color: grey;
+  box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
 
 @media (max-width: 1280px){

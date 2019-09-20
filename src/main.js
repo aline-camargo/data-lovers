@@ -11,7 +11,7 @@ const initialTable = () =>{
 
 const disable = () =>{
   document.getElementById("final-year").setAttribute("disabled", "");
-  document.getElementById("final-year-label").style.color = "grey";
+  document.getElementById("final-year-label").innerHTML = "";
   document.getElementById("initial-year-label").innerHTML = "Ano";
 };
 
