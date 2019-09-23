@@ -63,8 +63,7 @@ const search = () =>{
   const years = app.filterYears(period);
   const tableBase = app.tableBaseMaker(years, periodAndTransport, selectTransport, period);
   const tableBaseOrdered = app.orderAccidents(tableBase, accidentOrder);
-  
-console.log(accidentOrder);
+
   if (selectTransport == "Todos") {
     moreThanOneTable(tableBase, order);
   } else {
