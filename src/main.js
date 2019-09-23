@@ -44,17 +44,18 @@ const search = () =>{
   };
 
   const period = app.filterPeriod(injurieAccidents, initialYear, finalYear);
+  const periodAndTransport = app.filterTransport(period, selectTransport);
 
   try {
     if (period === "Caractere Inválido") throw "Caractere Inválido";
     if (period === "Período Inválido") throw "Período Inválido";
+    if (periodAndTransport === "Selecione um Transporte") throw "Selecione um Transporte";
     if (finalYear === initialYear && document.getElementById("period").checked) throw "Selecione \"Apenas um ano\"";
   } catch (erro) {
     document.getElementById("table-results").setAttribute("hidden", "");
     document.getElementById("error-message").innerHTML = erro;
   };
 
-  const periodAndTransport = app.filterTransport(period, selectTransport);
   const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
   const years = app.filterYears(period);
 
@@ -115,6 +116,7 @@ const average = () =>{
   const initialYear = Number(document.getElementById("initial-year").value);
   let finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
+  //const temporaria = app.average(injurieAccidents, initialYear, finalYear, selectTransport);
   const period = app.filterPeriod(injurieAccidents, initialYear, finalYear);
 
   if (selectTransport === "Todos") {

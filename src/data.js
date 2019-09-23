@@ -21,7 +21,10 @@ const filterYears = (period) => {
 };
 
 const filterTransport = (period, selectTransport) => {
-  if (selectTransport == "Carro") {
+  if (selectTransport == "identificator") {
+    return "Selecione um Transporte";
+
+  } else if (selectTransport == "Carro") {
     const injuriecar = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]]);
     return injuriecar;
 
@@ -40,6 +43,9 @@ const totalAccidentsPeriodTransport = (injurie) => {
   return carsTotalPeriod;
 };
 
+// const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
+//   const period = filterPeriod(injurieAccidents, initialYear, finalYear);
+// }
 app = {
   filterPeriod,
   filterTransport,
