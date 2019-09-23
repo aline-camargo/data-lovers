@@ -12,7 +12,6 @@ const filterPeriod = (data, initialYear, finalYear) => {
     && injurie.Year.slice(0, 4) <= finalYear));
     return period;
   }
-
 };
 
 const filterYears = (period) => {
@@ -46,11 +45,48 @@ const totalAccidentsPeriodTransport = (injurie) => {
 // const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
 //   const period = filterPeriod(injurieAccidents, initialYear, finalYear);
 // }
+
+const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
+  const tableBase = [];
+
+  if (selectTransport === "Todos") {
+    const carAccidents = filterTransport(period, "Carro");
+    const motoAccidents = filterTransport(period, "Moto");
+    const allAccidents = filterTransport(period, "Todos");
+
+    for (let i=0; i < years.length; i) {
+      const concat = years.shift() + " " + carAccidents.shift() + " " + motoAccidents.shift() + " " + allAccidents.shift();
+      tableBase.push(concat.split(" "));
+    }
+  } else {
+    for (let i=0; i < years.length; i) {
+      const concat = years.shift() + " " + periodAndTransport.shift();
+      tableBase.push(concat.split(" "));
+    }
+  };
+  return tableBase;
+};
+
+const orderAccidents = (tableBase, order) =>{
+  console.log(order);
+  console.log(tableBase);
+  const compare = (a, b) =>{ if (a[1] > b[1]) console.log(a[1]); return 1;};
+  const compare2 =(a, b) =>{ if (a[1] < b[1]) return 1;};
+
+  if (order == "crescent") {
+    console.log (tableBase.sort(compare));
+  } else if (order == "decrescent") {
+    console.log (tableBase.sort(compare2));
+  }
+};
+
 app = {
   filterPeriod,
   filterTransport,
   totalAccidentsPeriodTransport,
   filterYears,
+  tableBaseMaker,
+  orderAccidents,
 };
 
 module.exports = {
