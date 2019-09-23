@@ -25,7 +25,7 @@ const enable = () =>{
 
 const search = () =>{
   document.getElementById("main-table").setAttribute("hidden", "");
-  const initialYear = Number(document.getElementById("initial-year").value);
+  let initialYear = Number(document.getElementById("initial-year").value);
   let finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
   const order = document.getElementById("order").value;
@@ -41,17 +41,22 @@ const search = () =>{
     document.getElementById("average").removeAttribute("hidden", "");
     document.getElementById("order-title").removeAttribute("hidden", "");
     document.getElementById("order").removeAttribute("hidden", "");
-  }
+  };
 
   const period = app.filterPeriod(injurieAccidents, initialYear, finalYear);
 
-  // if (period === "Inválido") {
-  //   document.getElementById("error-message").innerHTML = "Caractere inválido.";
-  // } else {
-    const periodAndTransport = app.filterTransport(period, selectTransport);
-    const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
-    const years = app.filterYears(period);
-  //}
+  try {
+    if (period === "Caractere Inválido") throw "Caractere Inválido";
+    if (period === "Período Inválido") throw "Período Inválido";
+    if (finalYear === initialYear && document.getElementById("period").checked) throw "Selecione \"Apenas um ano\"";
+  } catch (erro) {
+    document.getElementById("table-results").setAttribute("hidden", "");
+    document.getElementById("error-message").innerHTML = erro;
+  };
+
+  const periodAndTransport = app.filterTransport(period, selectTransport);
+  const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
+  const years = app.filterYears(period);
 
   if (selectTransport == "Todos") {
     moreThanOneTable(period, years, order);
@@ -64,7 +69,7 @@ const resultTable = (periodAndTransport, accidentsTotal, years, selectTransport,
 
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
-  document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Total de Acidentes</td></tr>";
+  document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Número de Acidentes</td></tr>";
 
   if (order == "older") {
     periodAndTransport.reverse();
@@ -143,6 +148,6 @@ const average = () =>{
 window.addEventListener("load", initialTable);
 document.getElementById("average").addEventListener("click", average);
 document.getElementById("order").addEventListener("change", search);
+document.getElementById("search").addEventListener("click", search);
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);
-document.getElementById("search").addEventListener("click", search);

@@ -1,22 +1,24 @@
-//const injurieAccidents = INJURIES;
+const carAccidents = ["Total_Injured_Persons_Passenger_Car_Occupants", "Total_Injured_Persons_Passenger_Or_Occupant"];
+const motoAccidents = ["Total_Injured_Persons_Motorcyclists"];
 
 const filterPeriod = (data, initialYear, finalYear) => {
-  // if (initialYear === 0 || finalYear === 0) {
-  //   return "Inválido";
-  // } else {
+
+  if (initialYear === 0 || finalYear === 0) {
+    return "Caractere Inválido";
+  } else if (initialYear < 2000 || finalYear > 2015 || finalYear < initialYear) {
+    return "Período Inválido";
+  } else {
     const period = data.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear
     && injurie.Year.slice(0, 4) <= finalYear));
     return period;
-  //}
+  }
+
 };
 
 const filterYears = (period) => {
   const years = period.map(item => item.Year.slice(0, 4));
   return years;
 };
-
-const carAccidents = ["Total_Injured_Persons_Passenger_Car_Occupants", "Total_Injured_Persons_Passenger_Or_Occupant"];
-const motoAccidents = ["Total_Injured_Persons_Motorcyclists"];
 
 const filterTransport = (period, selectTransport) => {
   if (selectTransport == "Carro") {

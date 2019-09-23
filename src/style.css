@@ -25,12 +25,12 @@ body{
 .title-page{
   margin: 0.5% auto;
 }
-.principal{
+.main{
   float: right;
   margin: 2.5%;
   width: 70%;
 }
-.apresentacao{
+.presentation{
   font-family: "Prompt", sans-serif;
   color: white;
   text-shadow: 4px 2px 3px #808080;
@@ -79,7 +79,10 @@ body{
   font-size: large;
 }
 .table-body tr:nth-child(2n){
-  background: #ccc;
+  background: #E3E8FF;
+}
+.table-body tr:hover{
+  background-color: rgba(255,255,255,0.3);
 }
 .total{
   font-weight: bold;
@@ -224,7 +227,7 @@ body{
   .selector{
     margin-top: 2%;
   }
-  .apresentacao{
+  .presentation{
     text-align: center;
     margin-bottom: 0;
     font-size: 30px;
@@ -240,7 +243,7 @@ body{
   .choice{
     margin: 1% 9%;
   }
-  .principal{
+  .main{
     margin: auto;
     width: 100%;
     margin-bottom: 3%;
