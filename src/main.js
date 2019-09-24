@@ -23,46 +23,70 @@ const enable = () =>{
   document.getElementById("initial-year-label").innerHTML = "Ano Inicial";
 };
 
-const search = () =>{
+const checkRadio = (array, initialYear, finalYear) =>{
+  if (document.getElementById("one-year").checked) {
+    finalYear = initialYear;
+    for (let element of array) {
+      element.setAttribute("hidden", "");
+    };
+  } else {
+    for (let element of array) {
+      element.removeAttribute("hidden", "");
+    };
+    if (finalYear === initialYear) {
+      document.getElementById("error-message").innerHTML = "Selecione \"Apenas um ano\"";
+      for (let element of array) {
+        element.setAttribute("hidden", "");
+      };
+    };
+  };
+  return finalYear;
+};
+
+const cleanMain = () => {
   document.getElementById("main-table").setAttribute("hidden", "");
-  let initialYear = Number(document.getElementById("initial-year").value);
-  let finalYear = Number(document.getElementById("final-year").value);
+  document.getElementById("error-message").innerHTML = "";
+};
+
+const search = () =>{
+  cleanMain();
+
+  const initialYear = Number(document.getElementById("initial-year").value);
+  const finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
   const order = document.getElementById("order-year").value;
   const accidentOrder = document.getElementById("order-accident").value;
 
-  if (document.getElementById("one-year").checked) {
-    finalYear = initialYear;
-    document.getElementById("order-year").setAttribute("hidden", "");
-    document.getElementById("order-accident").setAttribute("hidden", "");
-    document.getElementById("average-title").setAttribute("hidden", "");
-    document.getElementById("average").setAttribute("hidden", "");
-    document.getElementById("order-title").setAttribute("hidden", "");
-  } else {
-    document.getElementById("average-title").removeAttribute("hidden", "");
-    document.getElementById("average").removeAttribute("hidden", "");
-    document.getElementById("order-title").removeAttribute("hidden", "");
-    document.getElementById("order-year").removeAttribute("hidden", "");
-    document.getElementById("order-accident").removeAttribute("hidden", "");
-  };
+  const hideElements = document.getElementsByName("hide");
+  const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
 
-  const period = app.filterPeriod(injurieAccidents, initialYear, finalYear);
-  const periodAndTransport = app.filterTransport(period, selectTransport);
+  const period = app.filterPeriod(injurieAccidents, initialYear, checkedFinalYear);
 
   try {
     if (period === "Caractere Inválido") throw "Caractere Inválido";
     if (period === "Período Inválido") throw "Período Inválido";
-    if (periodAndTransport === "Selecione um Transporte") throw "Selecione um Transporte";
-    if (finalYear === initialYear && document.getElementById("period").checked) throw "Selecione \"Apenas um ano\"";
-  } catch (erro) {
+  } catch (error) {
     document.getElementById("table-results").setAttribute("hidden", "");
-    document.getElementById("error-message").innerHTML = erro;
+    document.getElementById("error-message").innerHTML = error;
+  };
+
+  const periodAndTransport = app.filterTransport(period, selectTransport);
+  try {
+    if (periodAndTransport === "Selecione um Transporte") throw "Selecione um Transporte";
+  } catch (error) {
+    document.getElementById("table-results").setAttribute("hidden", "");
+    document.getElementById("error-message").innerHTML = error;
   };
 
   const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
   const years = app.filterYears(period);
   const tableBase = app.tableBaseMaker(years, periodAndTransport, selectTransport, period);
   const tableBaseOrdered = app.orderAccidents(tableBase, accidentOrder);
+
+  if (document.getElementById("error-message").innerHTML != "") {
+    document.getElementById("table-results").setAttribute("hidden", "");
+    return;
+  };
 
   if (selectTransport == "Todos") {
     moreThanOneTable(tableBase, order);
