@@ -67,12 +67,20 @@ const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
 };
 
 const orderAccidents = (tableBase, order) =>{
-  const compare = (a, b) =>{if (a[1] > b[1]) {return 1;} else {return -1}};
-  const compare2 =(a, b) =>{if (a[1] < b[1]) {return 1;} else {return -1}};
+  
+  let index = 0;
+  if (order === "crescent" || order === "decrescent") {
+    index = 1;
+  } else if (order === "recent" || order === "older") {
+    index = 0;
+  }  
+  
+  const compare = (a, b) =>{if (a[index] > b[index]) {return 1;} else {return -1;}};
+  const compare2 =(a, b) =>{if (a[index] < b[index]) {return 1;} else {return -1;}};
 
-  if (order == "crescent") {
+  if (order === "crescent" || order === "recent") {
     return tableBase.sort(compare);
-  } else if (order == "decrescent") {
+  } else if (order === "decrescent" || order === "older") {
     return tableBase.sort(compare2);
   }
 };
