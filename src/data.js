@@ -68,8 +68,8 @@ const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
 };
 
 const orderAccidents = (tableBase, order) =>{
-  const compare = (a, b) =>{if (a[1] > b[1]){return 1}};
-  const compare2 =(a, b) =>{if (a[1] < b[1]){return 1}};
+  const compare = (a, b) =>{if (a[1] > b[1]) {return 1;}};
+  const compare2 =(a, b) =>{if (a[1] < b[1]) {return 1;}};
 
   if (order == "crescent") {
     return tableBase.sort(compare);
