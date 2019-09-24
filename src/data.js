@@ -54,15 +54,25 @@ const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
     const motoAccidents = filterTransport(period, "Moto");
     const allAccidents = filterTransport(period, "Todos");
 
-    for (let i=0; i < years.length; i) {
+    do {
       const concat = years.shift() + " " + carAccidents.shift() + " " + motoAccidents.shift() + " " + allAccidents.shift();
       tableBase.push(concat.split(" "));
-    }
+    } while (years.length != 0);
+
+    // for (let i=0; i < years.length; i) {
+    //   const concat = years.shift() + " " + carAccidents.shift() + " " + motoAccidents.shift() + " " + allAccidents.shift();
+    //   tableBase.push(concat.split(" "));
+    // }
   } else {
-    for (let i=0; i < years.length; i) {
+
+    do {
       const concat = years.shift() + " " + periodAndTransport.shift();
       tableBase.push(concat.split(" "));
-    }
+    } while (years.length != 0);
+    // for (let i=0; i < years.length; i) {
+    //   const concat = years.shift() + " " + periodAndTransport.shift();
+    //   tableBase.push(concat.split(" "));
+    // }
   };
   return tableBase;
 };
