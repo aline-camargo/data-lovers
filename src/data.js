@@ -53,33 +53,22 @@ const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
     const carAccidents = filterTransport(period, "Carro");
     const motoAccidents = filterTransport(period, "Moto");
     const allAccidents = filterTransport(period, "Todos");
-
     do {
       const concat = years.shift() + " " + carAccidents.shift() + " " + motoAccidents.shift() + " " + allAccidents.shift();
       tableBase.push(concat.split(" "));
     } while (years.length != 0);
-
-    // for (let i=0; i < years.length; i) {
-    //   const concat = years.shift() + " " + carAccidents.shift() + " " + motoAccidents.shift() + " " + allAccidents.shift();
-    //   tableBase.push(concat.split(" "));
-    // }
   } else {
-
     do {
       const concat = years.shift() + " " + periodAndTransport.shift();
       tableBase.push(concat.split(" "));
     } while (years.length != 0);
-    // for (let i=0; i < years.length; i) {
-    //   const concat = years.shift() + " " + periodAndTransport.shift();
-    //   tableBase.push(concat.split(" "));
-    // }
   };
   return tableBase;
 };
 
 const orderAccidents = (tableBase, order) =>{
-  const compare = (a, b) =>{if (a[1] > b[1]) {return 1;}};
-  const compare2 =(a, b) =>{if (a[1] < b[1]) {return 1;}};
+  const compare = (a, b) =>{if (a[1] > b[1]) {return 1;} else {return -1}};
+  const compare2 =(a, b) =>{if (a[1] < b[1]) {return 1;} else {return -1}};
 
   if (order == "crescent") {
     return tableBase.sort(compare);
