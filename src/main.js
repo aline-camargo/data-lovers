@@ -54,9 +54,7 @@ const search = () =>{
   const initialYear = Number(document.getElementById("initial-year").value);
   const finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
-  const order = document.getElementById("order-year").value;
-  const accidentOrder = document.getElementById("order-accident").value;
-
+  const order = document.getElementById("order").value;
   const hideElements = document.getElementsByName("hide");
   const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
 
@@ -81,7 +79,7 @@ const search = () =>{
   const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
   const years = app.filterYears(period);
   const tableBase = app.tableBaseMaker(years, periodAndTransport, selectTransport, period);
-  const tableBaseOrdered = app.orderAccidents(tableBase, accidentOrder);
+  app.orderAccidents(tableBase, order);
 
   if (document.getElementById("error-message").innerHTML != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
@@ -101,10 +99,6 @@ const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
   document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Número de Acidentes</td></tr>";
 
-  if (order == "older") {
-    tableBase.reverse();
-  }
-
   for (let index in tableBase) {
     document.getElementById("t-body").innerHTML += `<tr><td>${tableBase[index][0]}</td><td>${tableBase[index][1]}</td></tr>`;
   }
@@ -115,12 +109,7 @@ const moreThanOneTable = (tableBase, order) =>{
 
   document.getElementById("t-head").innerHTML = "";
   document.getElementById("t-body").innerHTML = "";
-
   document.getElementById("table-results").removeAttribute("hidden", "");
-  if (order == "older") {
-    tableBase.reverse();
-  }
-
   document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
   document.getElementById("t-body").innerHTML += `<tr class="main-table-subtitle"><td>Ano</td><td>Carro</td>
     <td>Moto</td><td>Todos</td></tr>`;
@@ -168,8 +157,7 @@ const average = () =>{
 
 window.addEventListener("load", initialTable);
 document.getElementById("average").addEventListener("click", average);
-document.getElementById("order-year").addEventListener("change", search);
-document.getElementById("order-accident").addEventListener("change", search);
+document.getElementById("order").addEventListener("change", search);
 document.getElementById("search").addEventListener("click", search);
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);

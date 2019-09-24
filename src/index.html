@@ -38,15 +38,16 @@
           </select>
           <button type="button" name="search" class="button" id="search">Buscar</button>
           <h2 class="title-nav" name="hide" id="order-title" hidden>Ordenar Acidentes</h2>
-          <select class="selector" name="hide" id="order-year" hidden>
-            <option value="title" disabled selected>Por Ano</option>
+          <select class="selector" name="hide" id="order" hidden>
+            <option value="title" disabled selected>Ordenar</option>
+            <optgroup label="Por Ano">
             <option value="recent">Mais Recente</option>
             <option value="older">Mais Antigo</option>
-          </select>
-          <select class="selector" name="hide" id="order-accident" hidden>
-            <option value="title" disabled selected>Número de Acidentes</option>
+            </optgroup>
+            <optgroup label="Por Acidentes">
             <option value="crescent">Crescente</option>
             <option value="decrescent">Decrescente</option>
+            </optgroup>
           </select>
           <h2 name="hide" class="title-nav" id="average-title" hidden>Média de Acidentes por Ano</h2>
           <button type="button" name="hide" class="button" id="average" hidden>Buscar</button>
