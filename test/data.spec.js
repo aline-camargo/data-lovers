@@ -6,7 +6,8 @@ const arrDataYears = [{Year: "1960-01-04"}, {Year: "2000-01-04"}, {Year: "2001-0
 const arrDataTransport = [{Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
   {Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
   {Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
-const arrayAcc = [2051609, 88652, 1378000, 18895];
+const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
+const arrayYears = ["1960", "2000", "2001", "2019", "2011"];
 
 describe("Testando filterPeriod", () =>{
   test("É um objeto", () =>{
@@ -50,7 +51,7 @@ describe("Testando totalAccidentsPeriodTransport", () =>{
   });
 
   test("Pega total do Array", () =>{
-    expect(origin.totalAccidentsPeriodTransport(arrayAcc)).toEqual(3537156);
+    expect(origin.totalAccidentsPeriodTransport(arrayAcc)).toEqual(3624832);
   });
 });
 
@@ -61,5 +62,27 @@ describe("Testando filterYears", () =>{
 
   test("Retorna array com os anos", ()=>{
     expect(origin.filterYears(arrDataYears)).toEqual(["1960", "2000", "2001", "2019", "2011"]);
+  });
+});
+
+describe("Testando tableBaseMaker", () =>{
+  test("É um objeto", () =>{
+    const arrDataYears = [{Year: "1960-01-04"}, {Year: "2000-01-04"}, {Year: "2001-01-04"}, {Year: "2019-01-04"}, {Year: "2011-01-04"}];
+    const arrDataTransport = [{Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
+      {Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
+      {Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
+    const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
+    const arrayYears = ["1960", "2000", "2001", "2019", "2011"];
+    expect(typeof origin.tableBaseMaker(arrayYears, arrayAcc, "Carro", arrDataYears)).toEqual("object");
+  });
+
+  test("Retorna array c/ anos e acidentes", () =>{
+    const arrDataYears = [{Year: "1960-01-04"}, {Year: "2000-01-04"}, {Year: "2001-01-04"}, {Year: "2019-01-04"}, {Year: "2011-01-04"}];
+    const arrDataTransport = [{Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
+      {Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
+      {Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
+    const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
+    const arrayYears = ["1960", "2000", "2001", "2019", "2011"];
+    expect(origin.tableBaseMaker(arrayYears, arrayAcc, "Carro", arrDataYears)).toEqual([["1960", "2051609"], ["2000", "88652"], ["2001", "1378000"], ["2019", "18895"], ["2011", "87676"]]);
   });
 });

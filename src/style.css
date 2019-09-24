@@ -112,7 +112,7 @@ body{
   margin: 5%;
   border: none;
 }
-.radio-year{
+.radio{
   margin-left: 4.5%;
   -webkit-appearance: none;
   width: 16px;
@@ -121,10 +121,10 @@ body{
   transition: 0.2s all linear;
   border: 2px solid white;
 }
-.radio-year:hover{
+.radio:hover{
   cursor: pointer;
 }
-.radio-year:checked {
+.radio:checked {
   border: 5px solid white;
 }
 .label-year{
@@ -172,6 +172,12 @@ body{
   cursor: pointer;
   box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
+.order{
+  margin: 5px 36px;
+}
+.sort{
+  margin-top: 0;
+}
 
 @media (max-width: 1280px){
   .header{
@@ -188,13 +194,13 @@ body{
     margin-top: 1%;
     font-size: 278%;
   }
-  .radio-year{
+  .radio{
     width: 35px;
     height: 35px;
     border: 5px solid white;
     margin-left: 10%;
   }
-  .radio-year:checked {
+  .radio:checked {
     border: 10px solid white;
   }
   .label-year{

@@ -38,8 +38,8 @@ const filterTransport = (period, selectTransport) => {
 };
 
 const totalAccidentsPeriodTransport = (injurie) => {
-  const carsTotalPeriod = injurie.reduce((total, year) => total + year, 0);
-  return carsTotalPeriod;
+  const totalAccidents = injurie.reduce((total, accident) => total + accident, 0);
+  return totalAccidents;
 };
 
 // const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
@@ -66,17 +66,32 @@ const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
   return tableBase;
 };
 
-const orderAccidents = (tableBase, order) =>{
-  
+const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
+
   let index = 0;
+
   if (order === "crescent" || order === "decrescent") {
-    index = 1;
+    if (allTableOrderChoice === "moto") {
+      index = 2;
+    } else if (allTableOrderChoice === "all") {
+      index = 3;
+    } else {
+      index = 1;
+    }
   } else if (order === "recent" || order === "older") {
     index = 0;
-  }  
-  
-  const compare = (a, b) =>{if (a[index] > b[index]) {return 1;} else {return -1;}};
-  const compare2 =(a, b) =>{if (a[index] < b[index]) {return 1;} else {return -1;}};
+  }
+
+  const compare = (a, b) =>{
+    console.log(typeof a[index], typeof b[index]);
+    if (parseInt(a[index]) > parseInt(b[index])) {
+      return 1;
+    } else {
+      return -1;
+    }
+    return 0;
+  };
+  const compare2 =(a, b) =>{if (parseInt(a[index]) < parseInt(b[index])) {return 1;} else {return -1;}};
 
   if (order === "crescent" || order === "recent") {
     return tableBase.sort(compare);
@@ -99,4 +114,6 @@ module.exports = {
   filterTransport,
   totalAccidentsPeriodTransport,
   filterYears,
+  tableBaseMaker,
+  orderAccidents,
 };

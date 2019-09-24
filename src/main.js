@@ -79,7 +79,9 @@ const search = () =>{
   const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
   const years = app.filterYears(period);
   const tableBase = app.tableBaseMaker(years, periodAndTransport, selectTransport, period);
-  app.orderAccidents(tableBase, order);
+  const allTableOrderChoice = checkRadioOfOrder();
+
+  app.orderAccidents(tableBase, order, allTableOrderChoice);
 
   if (document.getElementById("error-message").innerHTML != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
@@ -93,7 +95,25 @@ const search = () =>{
   }
 };
 
+const checkRadioOfOrder = () =>{
+  let allTableOrderChoice = "";
+
+  if (document.getElementById("car-order-choice").checked) {
+    allTableOrderChoice = "car";
+  } else if (document.getElementById("moto-order-choice").checked) {
+    allTableOrderChoice = "moto";
+  } else if (document.getElementById("all-order-choice").checked) {
+    allTableOrderChoice = "all";
+  }
+  return allTableOrderChoice;
+};
+
 const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
+
+  const hideChoice = document.getElementsByName("hide-choice");
+  for (let element of hideChoice) {
+    element.setAttribute("hidden", "");
+  };
 
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
@@ -106,6 +126,11 @@ const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
 };
 
 const moreThanOneTable = (tableBase, order) =>{
+
+  const hideChoice = document.getElementsByName("hide-choice");
+  for (let element of hideChoice) {
+    element.removeAttribute("hidden", "");
+  };
 
   document.getElementById("t-head").innerHTML = "";
   document.getElementById("t-body").innerHTML = "";
