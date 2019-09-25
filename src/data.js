@@ -42,9 +42,35 @@ const totalAccidentsPeriodTransport = (injurie) => {
   return totalAccidents;
 };
 
-// const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
-//   const period = filterPeriod(injurieAccidents, initialYear, finalYear);
-// }
+const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
+  const period = filterPeriod(injurieAccidents, initialYear, finalYear);
+
+  if (selectTransport === "Todos") {
+    const periodAndTransportCar = app.filterTransport(period, "Carro");
+    const periodAndTransportMoto = app.filterTransport(period, "Moto");
+    const periodAndTransportAll = app.filterTransport(period, "Todos");
+
+    const accidentsTotalCar = app.totalAccidentsPeriodTransport(periodAndTransportCar);
+    const accidentsTotalMoto = app.totalAccidentsPeriodTransport(periodAndTransportMoto);
+    const accidentsTotalAll = app.totalAccidentsPeriodTransport(periodAndTransportAll);
+
+    const divider = periodAndTransportCar.length;
+
+    const resultAverage = [];
+
+    resultAverage.push(parseInt(accidentsTotalCar / divider));
+    resultAverage.push(parseInt(accidentsTotalMoto / divider));
+    resultAverage.push(parseInt(accidentsTotalAll / divider));
+
+    return resultAverage;
+  } else {
+    const periodAndTransport = app.filterTransport(period, selectTransport);
+    const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
+
+    const divider = periodAndTransport.length;
+    return parseInt(accidentsTotal / divider);
+  };
+};
 
 const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
   const tableBase = [];
@@ -107,6 +133,7 @@ app = {
   filterYears,
   tableBaseMaker,
   orderAccidents,
+  average,
 };
 
 module.exports = {
@@ -116,4 +143,5 @@ module.exports = {
   filterYears,
   tableBaseMaker,
   orderAccidents,
+  average,
 };
