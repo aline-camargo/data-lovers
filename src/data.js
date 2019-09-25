@@ -82,15 +82,7 @@ const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
     index = 0;
   }
 
-  const compare = (a, b) =>{
-    console.log(typeof a[index], typeof b[index]);
-    if (parseInt(a[index]) > parseInt(b[index])) {
-      return 1;
-    } else {
-      return -1;
-    }
-    return 0;
-  };
+  const compare = (a, b) =>{if (parseInt(a[index]) > parseInt(b[index])) {return 1;} else {return -1;}};
   const compare2 =(a, b) =>{if (parseInt(a[index]) < parseInt(b[index])) {return 1;} else {return -1;}};
 
   if (order === "crescent" || order === "recent") {

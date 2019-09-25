@@ -186,6 +186,7 @@ body{
   }
   .container{
     flex-direction: column;
+    height: auto;
   }
   .title-page{
     margin: 2% auto;
@@ -240,7 +241,7 @@ body{
   }
   .navigation{
     width: 100%;
-    height: 56%;
+    height: auto;
     order: 2;
   }
   .form-filter{
