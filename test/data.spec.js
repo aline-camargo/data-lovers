@@ -97,9 +97,9 @@ describe("Testando average", () =>{
   });
 
   test("Retorna array com médias por ano", () =>{
-    const testAverage = {Year: "1960-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
-    {Year: "2000-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
-    {Year: "2011-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
+    const testAverage = [{Year: "1960-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
+      {Year: "2000-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
+      {Year: "2011-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
 
     expect(origin.average(testAverage, 2000, 2011, "Todos")).toEqual([1443566, 88326, 1531892]);
   });
