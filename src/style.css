@@ -178,6 +178,14 @@ body{
 .sort{
   margin-top: 0;
 }
+.error-message{
+  font-size: 150%;
+    font-family: "Prompt", sans-serif;
+    font-weight: bolder;
+    color: rgb(226, 13, 13);
+    text-align: center;
+    margin-top: 3%;
+}
 
 @media (max-width: 1280px){
   .header{
