@@ -65,6 +65,9 @@ const search = () =>{
     if (period === "Período Inválido") throw "Período Inválido";
   } catch (error) {
     document.getElementById("table-results").setAttribute("hidden", "");
+    for (let element of hideElements) {
+      element.setAttribute("hidden", "");
+    };
     document.getElementById("error-message").innerHTML = error;
   };
 
