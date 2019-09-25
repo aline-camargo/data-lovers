@@ -145,43 +145,24 @@ const moreThanOneTable = (tableBase, order) =>{
   }
 };
 
-const average = () =>{
+const averageGetter = () =>{
   const initialYear = Number(document.getElementById("initial-year").value);
-  let finalYear = Number(document.getElementById("final-year").value);
+  const finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
-  //const temporaria = app.average(injurieAccidents, initialYear, finalYear, selectTransport);
-  const period = app.filterPeriod(injurieAccidents, initialYear, finalYear);
+  console.log(injurieAccidents);
+
+  const resultAverage = app.average(injurieAccidents, initialYear, finalYear, selectTransport);
 
   if (selectTransport === "Todos") {
-    const periodAndTransportCar = app.filterTransport(period, "Carro");
-    const periodAndTransportMoto = app.filterTransport(period, "Moto");
-    const periodAndTransportAll = app.filterTransport(period, "Todos");
-
-    const accidentsTotalCar = app.totalAccidentsPeriodTransport(periodAndTransportCar);
-    const accidentsTotalMoto = app.totalAccidentsPeriodTransport(periodAndTransportMoto);
-    const accidentsTotalAll = app.totalAccidentsPeriodTransport(periodAndTransportAll);
-
-    const divider = periodAndTransportCar.length;
-
-    const resultCar = parseInt(accidentsTotalCar / divider);
-    const resultMoto = parseInt(accidentsTotalMoto / divider);
-    const resultAll = parseInt(accidentsTotalAll / divider);
-
-    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Médias</td><td>${resultCar}</td>
-      <td>${resultMoto}</td><td>${resultAll}</td></tr>`;
+    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Médias</td><td>${resultAverage[0]}</td>
+      <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;
   } else {
-    const periodAndTransport = app.filterTransport(period, selectTransport);
-    const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
-
-    const divider = periodAndTransport.length;
-    const result = parseInt(accidentsTotal / divider);
-
-    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Média</td><td>${result}</td></tr>`;
+    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Média</td><td>${resultAverage}</td></tr>`;
   }
 };
 
 window.addEventListener("load", initialTable);
-document.getElementById("average").addEventListener("click", average);
+document.getElementById("average").addEventListener("click", averageGetter);
 document.getElementById("order").addEventListener("change", search);
 document.getElementById("search").addEventListener("click", search);
 document.getElementById("one-year").addEventListener("change", disable);
