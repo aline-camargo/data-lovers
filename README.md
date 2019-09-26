@@ -25,7 +25,11 @@ A interface é intuitiva e de fácil compreensão.
 O usuário poderá navegar pela barra lateral esquerda, onde filtrará os acidentes em apenas um ano ou por período e escolherá o tipo de transporte desejado. Poderá também, ordenar por ano ou quantidade de acidentes e, por fim, pegar a média de acidentes por ano no período escolhido.  
 O resultado será mostrado em uma tabela.
 
-FOTO/VÍDEO
+<figure class="video_container">
+  <video controls="true" allowfullscreen="true" poster="/home/laboratoria/Projects/SAP003-data-lovers/teste.png">
+    <source src="/home/laboratoria/Projects/SAP003-data-lovers/datalovers.mp4" type="video/mp4">
+  </video>
+</figure>
 
 A paleta de cor utilizada foi pensada para transmitir segurança ao usuário.
 
