@@ -3,12 +3,12 @@ const injurieAccidents = INJURIES;
 const initialTable = () =>{
   const initialPeriod = app.filterPeriod(injurieAccidents, 2000, 2015);
   const carAccidents = app.filterTransport(initialPeriod, "Carro");
-  const motosAccidents = app.filterTransport(initialPeriod, "Moto");
-  const totalCars = app.totalAccidentsPeriodTransport(carAccidents);
-  const totalMotos = app.totalAccidentsPeriodTransport(motosAccidents);
-  const accidentsTotal = totalCars + totalMotos;
-  document.getElementById("initial-total-results").innerHTML = `<td>${totalCars}</td>
-    <td>${totalMotos}</td><td>${accidentsTotal}</td>`;
+  const motoAccidents = app.filterTransport(initialPeriod, "Moto");
+  const totalCar = app.totalAccidentsPeriodTransport(carAccidents);
+  const totalMoto = app.totalAccidentsPeriodTransport(motoAccidents);
+  const accidentsTotal = totalCar + totalMoto;
+  document.getElementById("initial-total-results").innerHTML = `<td>${totalCar}</td>
+    <td>${totalMoto}</td><td>${accidentsTotal}</td>`;
 };
 
 const disable = () =>{
@@ -152,7 +152,6 @@ const averageGetter = () =>{
   const initialYear = Number(document.getElementById("initial-year").value);
   const finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
-  console.log(injurieAccidents);
 
   const resultAverage = app.average(injurieAccidents, initialYear, finalYear, selectTransport);
 
