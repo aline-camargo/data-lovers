@@ -23,8 +23,8 @@ A interface é intuitiva e de fácil compreensão.
 O usuário poderá navegar pela barra lateral esquerda, onde filtrará os acidentes em apenas um ano ou por período e escolherá o tipo de transporte desejado. Poderá também, ordenar por ano ou quantidade de acidentes e, por fim, pegar a média de acidentes por ano no período escolhido.
 O resultado será mostrado em uma tabela.
 
-FOTO E VÍDEO INTERFACE
+![Interface](Interface.png)
 
 A paleta de cor utilizada foi pensada para transmitir segurança ao usuário.
 
-FOTO PALETA DE CORES
+![Cores](Cores.png)
