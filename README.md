@@ -16,14 +16,14 @@ FOTOS 3 PERSONAS E HISTÓRIA DE USUÁRIO.
 A página foi desenhada pensando em sua usabilidade e que fosse de fácil entendimento dos usuários.
 Foram feitas pequenas mudanças no decorrer do projeto, como, por exemplo, os botões de média e ordenação que ficariam próximos a tabela de resultado. 
 
-FOTO DO PROTÓTIPO.
+![Interface](Interface.png)
 
 
 A interface é intuitiva e de fácil compreensão. 
 O usuário poderá navegar pela barra lateral esquerda, onde filtrará os acidentes em apenas um ano ou por período e escolherá o tipo de transporte desejado. Poderá também, ordenar por ano ou quantidade de acidentes e, por fim, pegar a média de acidentes por ano no período escolhido.
 O resultado será mostrado em uma tabela.
 
-![Interface](Interface.png)
+FOTO/VÍDEO
 
 A paleta de cor utilizada foi pensada para transmitir segurança ao usuário.
 
