@@ -23,7 +23,7 @@ const enable = () =>{
   document.getElementById("initial-year-label").innerHTML = "Ano Inicial";
 };
 
-const checkRadio = (array, initialYear, finalYear) =>{
+const checkRadio = (array, hideChoice, initialYear, finalYear) =>{
   if (document.getElementById("one-year").checked) {
     finalYear = initialYear;
     for (let element of array) {
@@ -56,7 +56,8 @@ const search = () =>{
   const selectTransport = document.getElementById("transport").value;
   const order = document.getElementById("order").value;
   const hideElements = document.getElementsByName("hide");
-  const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
+  const hideChoice = document.getElementsByName("hide-choice");
+  const checkedFinalYear = checkRadio(hideElements, hideChoice, initialYear, finalYear);
 
   const period = app.filterPeriod(injurieAccidents, initialYear, checkedFinalYear);
 
@@ -131,8 +132,14 @@ const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
 const moreThanOneTable = (tableBase, order) =>{
 
   const hideChoice = document.getElementsByName("hide-choice");
-  for (let element of hideChoice) {
-    element.removeAttribute("hidden", "");
+  if(document.getElementById("one-year").checked){
+    for (let element of hideChoice) {
+      element.setAttribute("hidden", "");
+    };
+  } else {
+    for (let element of hideChoice) {
+      element.removeAttribute("hidden", "");
+    };
   };
 
   document.getElementById("t-head").innerHTML = "";
