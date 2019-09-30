@@ -65,10 +65,10 @@ const search = () =>{
     if (period === "Período Inválido") throw "Período Inválido";
   } catch (error) {
     document.getElementById("table-results").setAttribute("hidden", "");
+    document.getElementById("error-message").innerHTML = error;
     for (let element of hideElements) {
       element.setAttribute("hidden", "");
     };
-    document.getElementById("error-message").innerHTML = error;
   };
 
   const periodAndTransport = app.filterTransport(period, selectTransport);
@@ -77,6 +77,9 @@ const search = () =>{
   } catch (error) {
     document.getElementById("table-results").setAttribute("hidden", "");
     document.getElementById("error-message").innerHTML = error;
+    for (let element of hideElements) {
+      element.setAttribute("hidden", "");
+    };
   };
 
   const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
