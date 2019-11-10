@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Data Lovers</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Prompt:400,700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header class="header">
+      <h1 class="title-page">Why Be Safe</h1>
+    </header>
+    <div class="container">
+      <nav class="navigation">
+        <form class="form-filter">
+          <h2 class="title-filter">Filtrar Acidentes</h2>
+          <fieldset class="choice">
+            <input type="radio" class="radio" name="radio" id="one-year">
+            <label for="one-year" class="label-year one">Apenas um ano</label>
+            <input type="radio" class="radio" name="radio" id="period" checked>
+            <label for="period" class="label-year">Período</label>
+          </fieldset>
+          <div>
+            <div class="years-united">
+              <label for="initial-year" class="years-labels" id="initial-year-label">Ano Inicial</label>
+              <input type="number" name="initial-year" class="year-input" min="2000" max="2015" id="initial-year">
+            </div>
+            <div class="years-united">
+              <label for="final-year" class="years-labels" id="final-year-label">Ano Final</label>
+              <input type="number" name="final-year" class="year-input" min="2000" max="2015" id="final-year">
+            </div>
+          </div>
+            <select class="selector" name="transport" id="transport">
+            <option value="identificator" disabled selected>Transporte</option>
+            <option value="carro">Carros</option>
+            <option value="moto">Motos</option>
+            <option value="allInjuries">Todos</option>
+          </select>
+          <button type="button" name="search" class="button" id="search">Buscar</button>
+          <h2 class="title-nav" name="hide" id="order-title" hidden>Ordenar Acidentes</h2>
+          <fieldset class="choice order">
+            <input type="radio" class="radio" name="hide-choice" value="car" id="car-order-choice" checked hidden>
+            <label for="all-order-choice" class="label-year" name="hide-choice" hidden>Carro</label>
+            <input type="radio" class="radio" name="hide-choice" value="moto" id="moto-order-choice" hidden>
+            <label for="all-order-choice"  class="label-year" name="hide-choice" hidden>Moto</label>
+            <input type="radio" class="radio" name="hide-choice" value="all" id="all-order-choice" hidden>
+            <label for="all-order-choice" class="label-year" name="hide-choice" hidden>Todos</label>
+          </fieldset>
+          <select class="selector sort" name="hide" id="order" hidden>
+            <option value="title" disabled selected>Ordenar</option>
+            <optgroup label="Por Ano">
+              <option value="recent">Crescente</option>
+              <option value="older">Decrescente</option>
+            </optgroup>
+            <optgroup label="Por Acidentes">
+              <option value="crescent">Crescente</option>
+              <option value="decrescent">Decrescente</option>
+            </optgroup>
+          </select>
+          <h2 name="hide" class="title-nav" id="average-title" hidden>Média de Acidentes por Ano</h2>
+          <button type="button" name="hide" class="button" id="average" hidden>Buscar</button>
+        </form>
+      </nav>
+      <main class="main">
+        <h3 class="presentation">Site dedicado a disponibilização de dados referentes a <br>
+          acidentes de trânsito envolvendo carros e motos no período de 2000 a 2015.
+        </h3>
+        <p id="error-message" class="error-message"></p>
+        <section>
+          <table class="table-results" id="table-results">
+          </table>
+        </section>
+      </main>
+    </div>
+    <script src="data/injuries/injuries.js"></script>
+    <script src="data.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

@@ -1,6 +1,3 @@
-html{
-  height: 100%;
-}
 body{
   background-color: #96a8e8;
   height: 100%;
@@ -9,34 +6,45 @@ body{
   display: flex;
   flex-direction: column;
 }
+
 .header{
-  float: left;
-  font-family: 'Lobster', cursive;
   text-align: center;
-  width: 100%;
+  width: 100vw;
   background-color: #152661;
-  color: white;
-  height: 60px;
+  height: max-content;
+  padding: 13px 0;
 }
+
 .container{
   height: 100%;
   display: flex;
 }
+
 .title-page{
-  margin: 0.5% auto;
+  margin: 0;
+  color: white;
+  font-family: 'Lobster', cursive;
 }
+
 .main{
-  float: right;
-  margin: 2.5%;
   width: 70%;
+  display: flex;
+  flex-direction: column;
 }
+
+
+.presentation-container{
+  padding: 0 20px;
+}
+
+
 .presentation{
   font-family: "Prompt", sans-serif;
   color: white;
   text-shadow: 4px 2px 3px #808080;
   text-align: right;
-  margin-bottom: 4%;
 }
+
 .main-table{
   text-align: center;
   border-collapse: collapse;
@@ -46,22 +54,27 @@ body{
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   font-family: "Prompt", sans-serif;
 }
+
 .main-table-head{
   color: white;
   font-size: large;
   background-color: #55608f;
-  padding: 10px;
+  padding: 6px 0;
 }
+
 .main-table-subtitle{
   font-weight: bold;
   background-color: #96AAFF;
 }
+
 .main-table-content{
   background-color: #E3E8FF;
 }
+
 .main-table-content:hover{
   background-color: rgba(255,255,255,0.3);
 }
+
 .table-results{
   text-align: center;
   border-collapse: collapse;
@@ -72,28 +85,36 @@ body{
   box-shadow: 0 5px 20px rgba(0,0,0,0.3);
   font-family: "Prompt", sans-serif;
 }
+
 .table-title{
   margin-top: 20px;
   background: #3c55ad;
   color: white;
   font-size: large;
 }
+
 .table-body tr:nth-child(2n){
   background: #E3E8FF;
 }
+
 .table-body tr:hover{
   background-color: rgba(255,255,255,0.3);
 }
+
 .total{
   font-weight: bold;
 }
-.navigation{
-  float: left;
+
+.form-filter{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   width: 25%;
-  height: 115%;
+  height: 100vh;
   background-color: #3d486c;
   color: white;
 }
+
 .title-filter{
   font-family: "Prompt", sans-serif;
   font-weight: bold;
@@ -101,6 +122,7 @@ body{
   margin-top: 4%;
   margin-bottom: 0;
 }
+
 .title-nav{
   font-family: "Prompt", sans-serif;
   font-weight: bold;
@@ -108,12 +130,22 @@ body{
   margin-bottom: 0;
   font-size: 127%;
 }
+
 .choice{
-  margin: 5%;
+  display: flex;
+  justify-content: space-between;
   border: none;
+  width: 80%;
 }
+
+
+.years-choice {
+  display: flex;
+  justify-content: space-between;
+  width: 60%;
+}
+
 .radio{
-  margin-left: 4.5%;
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
@@ -121,63 +153,67 @@ body{
   transition: 0.2s all linear;
   border: 2px solid white;
 }
+
 .radio:hover{
   cursor: pointer;
 }
+
 .radio:checked {
   border: 5px solid white;
 }
+
 .label-year{
   font-family: "Prompt", sans-serif;
   font-size: 15px;
 }
+
 .label-year:hover{
   cursor: pointer;
 }
+
 .years-labels{
   display: block;
   font-family: "Prompt", sans-serif;
   text-align: center;
 }
+
 .years-united{
   display: inline-block;
-  margin-bottom: 5%;
-  margin-left: 15%;
 }
+
 .year-input{
   width: 70px;
   text-align: center;
 }
+
 .selector{
-  margin-left: 30%;
   font-family: "Prompt", sans-serif;
   width: 33%;
-  margin-top: 4%;
 }
+
 .selector:hover{
   cursor: pointer;
   box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
+
 .button{
   padding: 5px 15px;
   border: 1px solid white;
   border-radius: 10%;
   font-family: "Prompt", sans-serif;
   font-size: 12px;
-  margin-top: 20px;
-  margin-left: 36%;
   background-color: white;
 }
+
 .button:hover{
   cursor: pointer;
   box-shadow: 0px 2px 12px rgba(255,255,255,0.3);
 }
-.order{
-  margin: 5px 36px;
-}
+
 .sort{
   margin-top: 0;
 }
+
 .error-message{
   font-size: 150%;
     font-family: "Prompt", sans-serif;
@@ -187,105 +223,87 @@ body{
     margin-top: 3%;
 }
 
-@media (max-width: 1280px){
-  .header{
-    height: 10%;
-    font-size: -webkit-xxx-large;
-  }
+@media (max-width: 900px){
+  
   .container{
     flex-direction: column;
     height: auto;
   }
-  .title-page{
-    margin: 2% auto;
-  }
+
   .title-filter{
     margin-top: 1%;
     font-size: 278%;
   }
+
   .radio{
-    width: 35px;
-    height: 35px;
+    width: 20px;
+    height: 20px;
     border: 5px solid white;
-    margin-left: 10%;
   }
+
   .radio:checked {
     border: 10px solid white;
   }
+
   .label-year{
-    font-size: 40px;
+    font-size: 20px;
   }
+
   .years-labels{
-    font-size: 40px;
+    font-size: 20px;
   }
-  .years-united{
-    width: 26%;
-  }
+
   .year-input{
-    width: 100%;
     line-height: 1.8;
-    font-size: x-large;
   }
-  .selector{
-    margin-left: 33%;
-    font-size: 28px;
-  }
-  .button{
-    font-size: 38px;
-    margin-top: 25px;
-    margin-left: 41%;
-  }
+
   .title-nav{
     margin-top: 4%;
     font-size: 230%
   }
-  .selector{
-    margin-top: 2%;
-  }
+
   .presentation{
     text-align: center;
     margin-bottom: 0;
-    font-size: 30px;
   }
+
   .navigation{
     width: 100%;
     height: auto;
     order: 2;
   }
+
   .form-filter{
-    height: 100%;
+    width: 100vw;
+    height: max-content;
+    order: 2;
   }
-  .choice{
-    margin: 1% 9%;
-  }
+
   .main{
-    margin: auto;
-    width: 100%;
-    margin-bottom: 3%;
-    margin-top: 0;
+    width: 100vw;
   }
+
   .main-table{
     width: 90%;
     margin: auto;
   }
+
   .main-table-head{
-    font-size: xx-large;
+    font-size: 16px;
   }
-  .main-table-subtitle{
-    font-size: 30px;
-  }
-  .main-table-content{
-    font-size: 27px;
-  }
+
   .table-results{
     margin: auto;
     width: 90%;
     margin-bottom: 15px;
   }
+
   .table-title{
     font-size: xx-large;
   }
+
   .table-body{
     font-size: 27px;
   }
+
 }
