@@ -127,7 +127,7 @@ body{
   font-family: "Prompt", sans-serif;
   font-weight: bold;
   text-align: center;
-  margin-bottom: 0;
+  margin: 0;
   font-size: 127%;
 }
 
@@ -143,6 +143,7 @@ body{
   display: flex;
   justify-content: space-between;
   width: 60%;
+  margin-bottom: 2vh;
 }
 
 .radio{
@@ -189,6 +190,7 @@ body{
 .selector{
   font-family: "Prompt", sans-serif;
   width: 33%;
+  margin-bottom: 2vh;
 }
 
 .selector:hover{
@@ -199,10 +201,10 @@ body{
 .button{
   padding: 5px 15px;
   border: 1px solid white;
-  border-radius: 10%;
+  border-radius: 5px;
   font-family: "Prompt", sans-serif;
-  font-size: 12px;
   background-color: white;
+  margin-bottom: 2vh;
 }
 
 .button:hover{
@@ -232,7 +234,14 @@ body{
 
   .title-filter{
     margin-top: 1%;
-    font-size: 278%;
+  }
+
+  .choice {
+    width: 65%;
+  }
+
+  .years-choice {
+    width: 50%;
   }
 
   .radio{
@@ -245,21 +254,8 @@ body{
     border: 10px solid white;
   }
 
-  .label-year{
-    font-size: 20px;
-  }
-
-  .years-labels{
-    font-size: 20px;
-  }
-
-  .year-input{
-    line-height: 1.8;
-  }
-
   .title-nav{
     margin-top: 4%;
-    font-size: 230%
   }
 
   .presentation{
