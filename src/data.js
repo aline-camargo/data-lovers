@@ -8,14 +8,14 @@ const filterPeriod = (data, initialYear, finalYear) => {
   } else if (initialYear < 2000 || finalYear > 2015 || finalYear < initialYear) {
     return "Período Inválido";
   } else {
-    const period = data.filter(injurie => (injurie.Year.slice(0, 4) >= initialYear
-    && injurie.Year.slice(0, 4) <= finalYear));
+    const period = data.filter(injurie => (injurie.year >= initialYear
+    && injurie.year <= finalYear));
     return period;
   }
 };
 
 const filterYears = (period) => {
-  const years = period.map(item => item.Year.slice(0, 4));
+  const years = period.map(item => item.year);
   return years;
 };
 
@@ -46,13 +46,13 @@ const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
   const period = filterPeriod(injurieAccidents, initialYear, finalYear);
 
   if (selectTransport === "Todos") {
-    const periodAndTransportCar = app.filterTransport(period, "Carro");
-    const periodAndTransportMoto = app.filterTransport(period, "Moto");
-    const periodAndTransportAll = app.filterTransport(period, "Todos");
+    const periodAndTransportCar = filterTransport(period, "Carro");
+    const periodAndTransportMoto = filterTransport(period, "Moto");
+    const periodAndTransportAll = filterTransport(period, "Todos");
 
-    const accidentsTotalCar = app.totalAccidentsPeriodTransport(periodAndTransportCar);
-    const accidentsTotalMoto = app.totalAccidentsPeriodTransport(periodAndTransportMoto);
-    const accidentsTotalAll = app.totalAccidentsPeriodTransport(periodAndTransportAll);
+    const accidentsTotalCar = totalAccidentsPeriodTransport(periodAndTransportCar);
+    const accidentsTotalMoto = totalAccidentsPeriodTransport(periodAndTransportMoto);
+    const accidentsTotalAll = totalAccidentsPeriodTransport(periodAndTransportAll);
 
     const divider = periodAndTransportCar.length;
 
@@ -64,8 +64,8 @@ const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
 
     return resultAverage;
   } else {
-    const periodAndTransport = app.filterTransport(period, selectTransport);
-    const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
+    const periodAndTransport = filterTransport(period, selectTransport);
+    const accidentsTotal = totalAccidentsPeriodTransport(periodAndTransport);
 
     const divider = periodAndTransport.length;
     return parseInt(accidentsTotal / divider);
@@ -112,23 +112,13 @@ const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
   const compare2 =(a, b) =>{if (parseInt(a[index]) < parseInt(b[index])) {return 1;} else {return -1;}};
 
   if (order === "crescent" || order === "recent") {
-    return tableBase.sort(compare);
-  } else if (order === "decrescent" || order === "older") {
     return tableBase.sort(compare2);
+  } else if (order === "decrescent" || order === "older") {
+    return tableBase.sort(compare);
   }
 };
 
-app = {
-  filterPeriod,
-  filterTransport,
-  totalAccidentsPeriodTransport,
-  filterYears,
-  tableBaseMaker,
-  orderAccidents,
-  average,
-};
-
-module.exports = {
+export default {
   filterPeriod,
   filterTransport,
   totalAccidentsPeriodTransport,

@@ -1,14 +1,36 @@
 const injurieAccidents = INJURIES;
+import helpers from "./data.js";
 
-const initialTable = () =>{
-  const initialPeriod = app.filterPeriod(injurieAccidents, 2000, 2015);
-  const carAccidents = app.filterTransport(initialPeriod, "Carro");
-  const motoAccidents = app.filterTransport(initialPeriod, "Moto");
-  const totalCar = app.totalAccidentsPeriodTransport(carAccidents);
-  const totalMoto = app.totalAccidentsPeriodTransport(motoAccidents);
-  const accidentsTotal = totalCar + totalMoto;
-  document.getElementById("initial-total-results").innerHTML = `<td>${totalCar}</td>
-    <td>${totalMoto}</td><td>${accidentsTotal}</td>`;
+const getInjuries = () => {
+  return fetch("https://raw.githubusercontent.com/aline-camargo/SAP003-data-lovers/master/src/data/injuries/injuries.json")
+    .then(response => response.json())
+    .then(data => {
+      const finalData = data.filter(injurie => {
+        const selectedYears = injurie.Year.slice(0, 4);
+        return selectedYears >= 2000 && selectedYears <= 2015;
+      });
+
+      return finalData.map(element => {
+        const cars = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant;
+        const moto = element.Total_Injured_Persons_Motorcyclists;
+        const total = cars + moto;
+        return { cars, moto, total, year: element.Year.slice(0, 4) };
+      });  
+    });
+};
+
+const showTotalTable = (injuries) => {
+  const totalInjuries = injuries.reduce((acc, cur) => ({
+    cars: acc.cars + cur.cars,
+    moto: acc.moto + cur.moto,
+    total: acc.total + cur.total,
+  }), { cars: 0, moto: 0, total: 0 })
+  
+  document.getElementById("initial-total-results").innerHTML = `
+    <td>${totalInjuries.cars}</td>
+    <td>${totalInjuries.moto}</td>
+    <td>${totalInjuries.total}</td>
+  `;
 };
 
 const disable = () =>{
@@ -23,7 +45,7 @@ const enable = () =>{
   document.getElementById("initial-year-label").innerHTML = "Ano Inicial";
 };
 
-const checkRadio = (array, hideChoice, initialYear, finalYear) =>{
+const checkRadio = (array, initialYear, finalYear) =>{
   if (document.getElementById("one-year").checked) {
     finalYear = initialYear;
     for (let element of array) {
@@ -51,15 +73,15 @@ const cleanMain = () => {
 const search = () =>{
   cleanMain();
 
-  const initialYear = Number(document.getElementById("initial-year").value);
-  const finalYear = Number(document.getElementById("final-year").value);
+  const initialYear = +document.getElementById("initial-year").value;
+  const finalYear = +document.getElementById("final-year").value;
   const selectTransport = document.getElementById("transport").value;
   const order = document.getElementById("order").value;
   const hideElements = document.getElementsByName("hide");
-  const hideChoice = document.getElementsByName("hide-choice");
-  const checkedFinalYear = checkRadio(hideElements, hideChoice, initialYear, finalYear);
+  const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
 
-  const period = app.filterPeriod(injurieAccidents, initialYear, checkedFinalYear);
+  const injuries = JSON.parse(localStorage.getItem("injuries"));
+  const period = helpers.filterPeriod(injuries, initialYear, checkedFinalYear);
 
   try {
     if (period === "Caractere Inválido") throw "Caractere Inválido";
@@ -72,7 +94,7 @@ const search = () =>{
     document.getElementById("error-message").innerHTML = error;
   };
 
-  const periodAndTransport = app.filterTransport(period, selectTransport);
+  const periodAndTransport = helpers.filterTransport(period, selectTransport);
   try {
     if (periodAndTransport === "Selecione um Transporte") throw "Selecione um Transporte";
   } catch (error) {
@@ -80,12 +102,12 @@ const search = () =>{
     document.getElementById("error-message").innerHTML = error;
   };
 
-  const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
-  const years = app.filterYears(period);
-  const tableBase = app.tableBaseMaker(years, periodAndTransport, selectTransport, period);
+  const accidentsTotal = helpers.totalAccidentsPeriodTransport(periodAndTransport);
+  const years = helpers.filterYears(period);
+  const tableBase = helpers.tableBaseMaker(years, periodAndTransport, selectTransport, period);
   const allTableOrderChoice = checkRadioOfOrder();
 
-  app.orderAccidents(tableBase, order, allTableOrderChoice);
+  helpers.orderAccidents(tableBase, order, allTableOrderChoice);
 
   if (document.getElementById("error-message").innerHTML != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
@@ -132,7 +154,7 @@ const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
 const moreThanOneTable = (tableBase, order) =>{
 
   const hideChoice = document.getElementsByName("hide-choice");
-  if(document.getElementById("one-year").checked){
+  if (document.getElementById("one-year").checked) {
     for (let element of hideChoice) {
       element.setAttribute("hidden", "");
     };
@@ -160,7 +182,7 @@ const averageGetter = () =>{
   const finalYear = Number(document.getElementById("final-year").value);
   const selectTransport = document.getElementById("transport").value;
 
-  const resultAverage = app.average(injurieAccidents, initialYear, finalYear, selectTransport);
+  const resultAverage = helpers.average(injurieAccidents, initialYear, finalYear, selectTransport);
 
   if (selectTransport === "Todos") {
     document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Médias</td><td>${resultAverage[0]}</td>
@@ -170,9 +192,21 @@ const averageGetter = () =>{
   }
 };
 
-window.addEventListener("load", initialTable);
-document.getElementById("average").addEventListener("click", averageGetter);
-document.getElementById("order").addEventListener("change", search);
-document.getElementById("search").addEventListener("click", search);
+window.addEventListener("load", () => {
+  const injuries = JSON.parse(localStorage.getItem("injuries"));
+  if (injuries) {
+    showTotalTable(injuries);
+  } else {
+    getInjuries()
+      .then(data => {
+        showTotalTable(data);
+        localStorage.setItem("injuries", JSON.stringify(data));
+      });
+  }
+});
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);
+document.getElementById("search").addEventListener("click", search);
+
+document.getElementById("average").addEventListener("click", averageGetter);
+document.getElementById("order").addEventListener("change", search);
