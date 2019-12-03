@@ -36,38 +36,31 @@ const showTotalTable = (injuries) => {
 const disable = () =>{
   document.getElementById("final-year").setAttribute("disabled", "");
   document.getElementById("final-year-label").style.color = "grey";
-  document.getElementById("initial-year-label").innerHTML = "Ano";
+  document.getElementById("initial-year-label").textContent = "Ano";
 };
 
 const enable = () =>{
   document.getElementById("final-year").removeAttribute("disabled", "");
   document.getElementById("final-year-label").style.color = "white";
-  document.getElementById("initial-year-label").innerHTML = "Ano Inicial";
+  document.getElementById("initial-year-label").textContent = "Ano Inicial";
 };
 
-const checkRadio = (array, initialYear, finalYear) =>{
+const checkRadio = (adicionalFilters, initialYear, finalYear) =>{
   if (document.getElementById("one-year").checked) {
-    finalYear = initialYear;
-    for (let element of array) {
-      element.setAttribute("hidden", "");
-    };
+    adicionalFilters.forEach(element => element.setAttribute("hidden", ""));
+    return initialYear;
+  } else if (finalYear === initialYear) {
+    document.getElementById("error-message").textContent = "Selecione \"Apenas um ano\"";
+    adicionalFilters.forEach(element => element.setAttribute("hidden", ""));
   } else {
-    for (let element of array) {
-      element.removeAttribute("hidden", "");
-    };
-    if (finalYear === initialYear) {
-      document.getElementById("error-message").innerHTML = "Selecione \"Apenas um ano\"";
-      for (let element of array) {
-        element.setAttribute("hidden", "");
-      };
-    };
-  };
+    adicionalFilters.forEach(element => element.removeAttribute("hidden", ""));
+  }
   return finalYear;
 };
 
 const cleanMain = () => {
   document.getElementById("main-table").setAttribute("hidden", "");
-  document.getElementById("error-message").innerHTML = "";
+  document.getElementById("error-message").textContent = "";
 };
 
 const search = () =>{
@@ -83,25 +76,19 @@ const search = () =>{
   const injuries = JSON.parse(localStorage.getItem("injuries"));
   const period = helpers.filterPeriod(injuries, initialYear, checkedFinalYear);
 
-  try {
-    if (period === "Caractere Inválido") throw "Caractere Inválido";
-    if (period === "Período Inválido") throw "Período Inválido";
-  } catch (error) {
+  if (typeof period === "string") {
     document.getElementById("table-results").setAttribute("hidden", "");
-    for (let element of hideElements) {
-      element.setAttribute("hidden", "");
-    };
-    document.getElementById("error-message").innerHTML = error;
-  };
+    hideElements.forEach(element => element.setAttribute("hidden", ""));
+    document.getElementById("error-message").textContent = period;
+  }
 
   const periodAndTransport = helpers.filterTransport(period, selectTransport);
-  try {
-    if (periodAndTransport === "Selecione um Transporte") throw "Selecione um Transporte";
-  } catch (error) {
-    document.getElementById("table-results").setAttribute("hidden", "");
-    document.getElementById("error-message").innerHTML = error;
-  };
 
+  if (typeof periodAndTransport === "string") {
+    document.getElementById("table-results").setAttribute("hidden", "");
+    document.getElementById("error-message").textContent = periodAndTransport;
+  }
+  
   const accidentsTotal = helpers.totalAccidentsPeriodTransport(periodAndTransport);
   const years = helpers.filterYears(period);
   const tableBase = helpers.tableBaseMaker(years, periodAndTransport, selectTransport, period);
@@ -109,12 +96,9 @@ const search = () =>{
 
   helpers.orderAccidents(tableBase, order, allTableOrderChoice);
 
-  if (document.getElementById("error-message").innerHTML != "") {
+  if (document.getElementById("error-message").textContent != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
-    return;
-  };
-
-  if (selectTransport == "Todos") {
+  } else if (selectTransport == "Todos") {
     moreThanOneTable(tableBase, order);
   } else {
     resultTable(tableBase, accidentsTotal, selectTransport, order);
@@ -122,73 +106,61 @@ const search = () =>{
 };
 
 const checkRadioOfOrder = () =>{
-  let allTableOrderChoice = "";
-
   if (document.getElementById("car-order-choice").checked) {
-    allTableOrderChoice = "car";
+    return "car";
   } else if (document.getElementById("moto-order-choice").checked) {
-    allTableOrderChoice = "moto";
+    return "moto";
   } else if (document.getElementById("all-order-choice").checked) {
-    allTableOrderChoice = "all";
+    return "all";
   }
-  return allTableOrderChoice;
 };
 
-const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
+const resultTable = (tableBase, accidentsTotal, selectTransport) =>{
 
   const hideChoice = document.getElementsByName("hide-choice");
-  for (let element of hideChoice) {
-    element.setAttribute("hidden", "");
-  };
-
+  hideChoice.forEach(element => element.setAttribute("hidden", ""));
+  const rowsTemplate = tableBase.map(element => `<tr><td>${element[0]}</td><td>${element[1]}</td></tr>`).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
-  document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Número de Acidentes</td></tr>";
-
-  for (let index in tableBase) {
-    document.getElementById("t-body").innerHTML += `<tr><td>${tableBase[index][0]}</td><td>${tableBase[index][1]}</td></tr>`;
-  }
-  document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Total</td><td>${accidentsTotal}</td></tr>`;
+  document.getElementById("t-body").innerHTML = `
+    <tr class="main-table-subtitle"><td>Ano</td><td>Número de Acidentes</td></tr>
+    ${rowsTemplate}
+    <tr><td class="total">Total</td><td>${accidentsTotal}</td></tr>
+  `;
 };
 
-const moreThanOneTable = (tableBase, order) =>{
+const moreThanOneTable = (tableBase) =>{
 
   const hideChoice = document.getElementsByName("hide-choice");
   if (document.getElementById("one-year").checked) {
-    for (let element of hideChoice) {
-      element.setAttribute("hidden", "");
-    };
+    hideChoice.forEach(element => element.setAttribute("hidden", ""));
   } else {
-    for (let element of hideChoice) {
-      element.removeAttribute("hidden", "");
-    };
+    hideChoice.forEach(element => element.removeAttribute("hidden", ""));
   };
 
-  document.getElementById("t-head").innerHTML = "";
-  document.getElementById("t-body").innerHTML = "";
+  const rowsTemplate = tableBase.map(element => `
+  <tr><td>${element[0]}</td><td>${element[1]}</td><td>${element[2]}</td><td>${element[3]}</td></tr>
+  `).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
-  document.getElementById("t-body").innerHTML += `<tr class="main-table-subtitle"><td>Ano</td><td>Carro</td>
-    <td>Moto</td><td>Todos</td></tr>`;
-
-  for (let index in tableBase) {
-    document.getElementById("t-body").innerHTML += `<tr><td>${tableBase[index][0]}</td><td>${tableBase[index][1]}</td>
-      <td>${tableBase[index][2]}</td><td>${tableBase[index][3]}</td></tr>`;
-  }
+  document.getElementById("t-body").innerHTML = `
+  <tr class="main-table-subtitle"><td>Ano</td><td>Carro</td><td>Moto</td><td>Todos</td></tr>
+  ${rowsTemplate}
+  `;  
 };
 
 const averageGetter = () =>{
-  const initialYear = Number(document.getElementById("initial-year").value);
-  const finalYear = Number(document.getElementById("final-year").value);
+  const initialYear = +document.getElementById("initial-year").value;
+  const finalYear = +document.getElementById("final-year").value;
   const selectTransport = document.getElementById("transport").value;
 
   const resultAverage = helpers.average(injurieAccidents, initialYear, finalYear, selectTransport);
 
   if (selectTransport === "Todos") {
-    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Médias</td><td>${resultAverage[0]}</td>
+    document.getElementById("t-body").innerHTML += `<tr><td class="total">Médias</td><td>${resultAverage[0]}</td>
       <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;
   } else {
-    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Média</td><td>${resultAverage}</td></tr>`;
+    document.getElementById("t-body").innerHTML += `<tr><td class="total">Média</td><td>${resultAverage}</td></tr>`;
   }
 };
 

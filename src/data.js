@@ -1,6 +1,3 @@
-const carAccidents = ["Total_Injured_Persons_Passenger_Car_Occupants", "Total_Injured_Persons_Passenger_Or_Occupant"];
-const motoAccidents = ["Total_Injured_Persons_Motorcyclists"];
-
 const filterPeriod = (data, initialYear, finalYear) => {
 
   if (initialYear === 0 || finalYear === 0) {
@@ -24,15 +21,15 @@ const filterTransport = (period, selectTransport) => {
     return "Selecione um Transporte";
 
   } else if (selectTransport == "Carro") {
-    const injuriecar = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]]);
+    const injuriecar = period.map(injurie => injurie.cars);
     return injuriecar;
 
   } else if (selectTransport == "Moto") {
-    const injuriemoto = period.map(injurie => injurie[motoAccidents]);
+    const injuriemoto = period.map(injurie => injurie.moto);
     return injuriemoto;
 
   } else if (selectTransport == "Todos") {
-    const injurieCarAndMoto = period.map(injurie => injurie[carAccidents[0]] + injurie[carAccidents[1]] + injurie[motoAccidents]);
+    const injurieCarAndMoto = period.map(injurie => injurie.total);
     return injurieCarAndMoto;
   }
 };
@@ -108,8 +105,8 @@ const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
     index = 0;
   }
 
-  const compare = (a, b) =>{if (parseInt(a[index]) > parseInt(b[index])) {return 1;} else {return -1;}};
-  const compare2 =(a, b) =>{if (parseInt(a[index]) < parseInt(b[index])) {return 1;} else {return -1;}};
+  const compare = (a, b) =>{if (parseInt(a[index]) < parseInt(b[index])) {return 1;} else {return -1;}};
+  const compare2 =(a, b) =>{if (parseInt(a[index]) > parseInt(b[index])) {return 1;} else {return -1;}};
 
   if (order === "crescent" || order === "recent") {
     return tableBase.sort(compare2);
