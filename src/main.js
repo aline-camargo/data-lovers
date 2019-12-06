@@ -1,5 +1,6 @@
-const injurieAccidents = INJURIES;
 import helpers from "./data.js";
+
+const selectTransport = document.getElementById("transport");
 
 const getInjuries = () => {
   return fetch("https://raw.githubusercontent.com/aline-camargo/SAP003-data-lovers/master/src/data/injuries/injuries.json")
@@ -11,24 +12,24 @@ const getInjuries = () => {
       });
 
       return finalData.map(element => {
-        const cars = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant;
-        const moto = element.Total_Injured_Persons_Motorcyclists;
-        const total = cars + moto;
-        return { cars, moto, total, year: element.Year.slice(0, 4) };
+        const Carros = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant;
+        const Motos = element.Total_Injured_Persons_Motorcyclists;
+        const total = Carros + Motos;
+        return { Carros, Motos, total, year: element.Year.slice(0, 4) };
       });  
     });
 };
 
 const showTotalTable = (injuries) => {
   const totalInjuries = injuries.reduce((acc, cur) => ({
-    cars: acc.cars + cur.cars,
-    moto: acc.moto + cur.moto,
+    Carros: acc.Carros + cur.Carros,
+    Motos: acc.Motos + cur.Motos,
     total: acc.total + cur.total,
-  }), { cars: 0, moto: 0, total: 0 })
+  }), { Carros: 0, Motos: 0, total: 0 });
   
   document.getElementById("initial-total-results").innerHTML = `
-    <td>${totalInjuries.cars}</td>
-    <td>${totalInjuries.moto}</td>
+    <td>${totalInjuries.Carros}</td>
+    <td>${totalInjuries.Motos}</td>
     <td>${totalInjuries.total}</td>
   `;
 };
@@ -68,13 +69,12 @@ const search = () =>{
 
   const initialYear = +document.getElementById("initial-year").value;
   const finalYear = +document.getElementById("final-year").value;
-  const selectTransport = document.getElementById("transport").value;
   const order = document.getElementById("order").value;
   const hideElements = document.getElementsByName("hide");
   const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
 
   const injuries = JSON.parse(localStorage.getItem("injuries"));
-  const period = helpers.filterPeriod(injuries, initialYear, checkedFinalYear);
+  const period = helpers.validatePeriod(injuries, initialYear, checkedFinalYear);
 
   if (typeof period === "string") {
     document.getElementById("table-results").setAttribute("hidden", "");
@@ -82,26 +82,22 @@ const search = () =>{
     document.getElementById("error-message").textContent = period;
   }
 
-  const periodAndTransport = helpers.filterTransport(period, selectTransport);
-
-  if (typeof periodAndTransport === "string") {
+  if (!selectTransport.value) {
     document.getElementById("table-results").setAttribute("hidden", "");
-    document.getElementById("error-message").textContent = periodAndTransport;
+    document.getElementById("error-message").textContent = "Escolha um transporte";
   }
   
-  const accidentsTotal = helpers.totalAccidentsPeriodTransport(periodAndTransport);
-  const years = helpers.filterYears(period);
-  const tableBase = helpers.tableBaseMaker(years, periodAndTransport, selectTransport, period);
-  const allTableOrderChoice = checkRadioOfOrder();
+  const accidentsTotal = helpers.totalAccidents(period, selectTransport.value);
 
-  helpers.orderAccidents(tableBase, order, allTableOrderChoice);
+  const allTableOrderChoice = checkRadioOfOrder();
+  // helpers.orderAccidents(tableBase, order, allTableOrderChoice);
 
   if (document.getElementById("error-message").textContent != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
-  } else if (selectTransport == "Todos") {
-    moreThanOneTable(tableBase, order);
+  } else if (selectTransport.value == "total") {
+    moreThanOneTable(period, accidentsTotal);
   } else {
-    resultTable(tableBase, accidentsTotal, selectTransport, order);
+    resultTable(period, accidentsTotal, selectTransport.value);
   }
 };
 
@@ -115,21 +111,20 @@ const checkRadioOfOrder = () =>{
   }
 };
 
-const resultTable = (tableBase, accidentsTotal, selectTransport) =>{
-
+const resultTable = (period, accidentsTotal, transport) =>{
   const hideChoice = document.getElementsByName("hide-choice");
   hideChoice.forEach(element => element.setAttribute("hidden", ""));
-  const rowsTemplate = tableBase.map(element => `<tr><td>${element[0]}</td><td>${element[1]}</td></tr>`).join("");
+  const rowsTemplate = period.map(element => `<tr><td>${element.year}</td><td>${element[transport]}</td></tr>`).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
-  document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
+  document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${transport}</th>`;
   document.getElementById("t-body").innerHTML = `
     <tr class="main-table-subtitle"><td>Ano</td><td>Número de Acidentes</td></tr>
     ${rowsTemplate}
-    <tr><td class="total">Total</td><td>${accidentsTotal}</td></tr>
+    <tr><td class="total">Total</td><td id="totalDeAcidentes">${accidentsTotal}</td></tr>
   `;
 };
 
-const moreThanOneTable = (tableBase) =>{
+const moreThanOneTable = (tableBase, totalAccidents) =>{
 
   const hideChoice = document.getElementsByName("hide-choice");
   if (document.getElementById("one-year").checked) {
@@ -139,27 +134,39 @@ const moreThanOneTable = (tableBase) =>{
   };
 
   const rowsTemplate = tableBase.map(element => `
-  <tr><td>${element[0]}</td><td>${element[1]}</td><td>${element[2]}</td><td>${element[3]}</td></tr>
+  <tr><td>${element.year}</td><td>${element.Carros}</td><td>${element.Motos}</td><td>${element.total}</td></tr>
   `).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
   document.getElementById("t-body").innerHTML = `
-  <tr class="main-table-subtitle"><td>Ano</td><td>Carro</td><td>Moto</td><td>Todos</td></tr>
+  <tr class="main-table-subtitle">
+    <td>Ano</td><td>Carro</td>
+    <td>Moto</td>
+    <td>Todos</td>
+  </tr>
   ${rowsTemplate}
+  <tr>
+    <td class="total">Total</td>
+    <td class="total-accidents">${totalAccidents.Carros}</td>
+    <td class="total-accidents">${totalAccidents.Motos}</td>
+    <td class="total-accidents">${totalAccidents.total}</td>
+  </tr>
   `;  
 };
 
 const averageGetter = () =>{
   const initialYear = +document.getElementById("initial-year").value;
   const finalYear = +document.getElementById("final-year").value;
-  const selectTransport = document.getElementById("transport").value;
+  const divider = finalYear - initialYear + 1;
 
-  const resultAverage = helpers.average(injurieAccidents, initialYear, finalYear, selectTransport);
-
-  if (selectTransport === "Todos") {
+  if (selectTransport.value === "total") {
+    const totalDeAcidentes = Array.from(document.querySelectorAll(".total-accidents"));
+    const resultAverage = helpers.average(totalDeAcidentes, divider);
     document.getElementById("t-body").innerHTML += `<tr><td class="total">Médias</td><td>${resultAverage[0]}</td>
-      <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;
+      <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;      
   } else {
+    const totalDeAcidentes = +document.querySelector("#totalDeAcidentes").textContent;
+    const resultAverage = helpers.average(totalDeAcidentes, divider);
     document.getElementById("t-body").innerHTML += `<tr><td class="total">Média</td><td>${resultAverage}</td></tr>`;
   }
 };

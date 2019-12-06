@@ -1,92 +1,37 @@
-const filterPeriod = (data, initialYear, finalYear) => {
-
+const validatePeriod = (data, initialYear, finalYear) => {
   if (initialYear === 0 || finalYear === 0) {
     return "Caractere Inválido";
   } else if (initialYear < 2000 || finalYear > 2015 || finalYear < initialYear) {
     return "Período Inválido";
   } else {
-    const period = data.filter(injurie => (injurie.year >= initialYear
-    && injurie.year <= finalYear));
-    return period;
+    return filterPeriod(data, initialYear, finalYear);
   }
 };
 
-const filterYears = (period) => {
-  const years = period.map(item => item.year);
-  return years;
+const filterPeriod = (data, initialYear, finalYear) => {
+  return data.filter(injurie => injurie.year >= initialYear && injurie.year <= finalYear);
 };
 
-const filterTransport = (period, selectTransport) => {
-  if (selectTransport == "identificator") {
-    return "Selecione um Transporte";
-
-  } else if (selectTransport == "Carro") {
-    const injuriecar = period.map(injurie => injurie.cars);
-    return injuriecar;
-
-  } else if (selectTransport == "Moto") {
-    const injuriemoto = period.map(injurie => injurie.moto);
-    return injuriemoto;
-
-  } else if (selectTransport == "Todos") {
-    const injurieCarAndMoto = period.map(injurie => injurie.total);
-    return injurieCarAndMoto;
+const totalAccidents = (injurie, transport) => {
+  if (transport != "total") {
+    let result = injurie.reduce((total, accident) => total + accident[transport], 0);
+    return result;
+  } else {
+    let result = injurie.reduce((acc, cur) => ({
+      Carros: acc.Carros + cur.Carros,
+      Motos: acc.Motos + cur.Motos,
+      total: acc.total + cur.total,
+    }), { Carros: 0, Motos: 0, total: 0 });
+    return result;
   }
 };
 
-const totalAccidentsPeriodTransport = (injurie) => {
-  const totalAccidents = injurie.reduce((total, accident) => total + accident, 0);
-  return totalAccidents;
-};
-
-const average = (injurieAccidents, initialYear, finalYear, selectTransport) =>{
-  const period = filterPeriod(injurieAccidents, initialYear, finalYear);
-
-  if (selectTransport === "Todos") {
-    const periodAndTransportCar = filterTransport(period, "Carro");
-    const periodAndTransportMoto = filterTransport(period, "Moto");
-    const periodAndTransportAll = filterTransport(period, "Todos");
-
-    const accidentsTotalCar = totalAccidentsPeriodTransport(periodAndTransportCar);
-    const accidentsTotalMoto = totalAccidentsPeriodTransport(periodAndTransportMoto);
-    const accidentsTotalAll = totalAccidentsPeriodTransport(periodAndTransportAll);
-
-    const divider = periodAndTransportCar.length;
-
-    const resultAverage = [];
-
-    resultAverage.push(parseInt(accidentsTotalCar / divider));
-    resultAverage.push(parseInt(accidentsTotalMoto / divider));
-    resultAverage.push(parseInt(accidentsTotalAll / divider));
-
-    return resultAverage;
+const average = (totalAccidents, divider) => {
+  if (typeof totalAccidents === "number") {
+    return parseInt(totalAccidents / divider);
   } else {
-    const periodAndTransport = filterTransport(period, selectTransport);
-    const accidentsTotal = totalAccidentsPeriodTransport(periodAndTransport);
-
-    const divider = periodAndTransport.length;
-    return parseInt(accidentsTotal / divider);
-  };
-};
-
-const tableBaseMaker = (years, periodAndTransport, selectTransport, period) =>{
-  const tableBase = [];
-
-  if (selectTransport === "Todos") {
-    const carAccidents = filterTransport(period, "Carro");
-    const motoAccidents = filterTransport(period, "Moto");
-    const allAccidents = filterTransport(period, "Todos");
-    do {
-      const concat = years.shift() + " " + carAccidents.shift() + " " + motoAccidents.shift() + " " + allAccidents.shift();
-      tableBase.push(concat.split(" "));
-    } while (years.length != 0);
-  } else {
-    do {
-      const concat = years.shift() + " " + periodAndTransport.shift();
-      tableBase.push(concat.split(" "));
-    } while (years.length != 0);
-  };
-  return tableBase;
+    return totalAccidents.map(element => parseInt(+element.textContent/divider));
+  }
 };
 
 const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
@@ -117,10 +62,8 @@ const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
 
 export default {
   filterPeriod,
-  filterTransport,
-  totalAccidentsPeriodTransport,
-  filterYears,
-  tableBaseMaker,
+  validatePeriod,
+  totalAccidents,
   orderAccidents,
   average,
 };
