@@ -13,16 +13,14 @@ const filterPeriod = (data, initialYear, finalYear) => {
 };
 
 const totalAccidents = (injurie, transport) => {
-  if (transport != "total") {
-    let result = injurie.reduce((total, accident) => total + accident[transport], 0);
-    return result;
+  if (transport != "total") {   
+    return injurie.reduce((total, accident) => total + accident[transport.toLowerCase()], 0);
   } else {
-    let result = injurie.reduce((acc, cur) => ({
-      Carros: acc.Carros + cur.Carros,
-      Motos: acc.Motos + cur.Motos,
+    return injurie.reduce((acc, cur) => ({
+      carros: acc.carros + cur.carros,
+      motos: acc.motos + cur.motos,
       total: acc.total + cur.total,
-    }), { Carros: 0, Motos: 0, total: 0 });
-    return result;
+    }), { carros: 0, motos: 0, total: 0 });
   }
 };
 
@@ -34,28 +32,15 @@ const average = (totalAccidents, divider) => {
   }
 };
 
-const orderAccidents = (tableBase, order, allTableOrderChoice) =>{
+const orderAccidents = (tableBase, order, selectTransport, allTableOrderChoice) =>{
+  const selectOrder = selectTransport === "total" ? allTableOrderChoice : selectTransport;
 
-  let index = 0;
+  const compare = (a, b) =>{if (parseInt(a[selectOrder]) < parseInt(b[selectOrder])) {return 1;} else {return -1;}};
+  const compare2 =(a, b) =>{if (parseInt(a[selectOrder]) > parseInt(b[selectOrder])) {return 1;} else {return -1;}};
 
-  if (order === "crescent" || order === "decrescent") {
-    if (allTableOrderChoice === "moto") {
-      index = 2;
-    } else if (allTableOrderChoice === "all") {
-      index = 3;
-    } else {
-      index = 1;
-    }
-  } else if (order === "recent" || order === "older") {
-    index = 0;
-  }
-
-  const compare = (a, b) =>{if (parseInt(a[index]) < parseInt(b[index])) {return 1;} else {return -1;}};
-  const compare2 =(a, b) =>{if (parseInt(a[index]) > parseInt(b[index])) {return 1;} else {return -1;}};
-
-  if (order === "crescent" || order === "recent") {
+  if (order === "crescent" || order === "older") {
     return tableBase.sort(compare2);
-  } else if (order === "decrescent" || order === "older") {
+  } else if (order === "decrescent" || order === "recent") {
     return tableBase.sort(compare);
   }
 };

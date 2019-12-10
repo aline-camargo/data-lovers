@@ -12,24 +12,24 @@ const getInjuries = () => {
       });
 
       return finalData.map(element => {
-        const Carros = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant;
-        const Motos = element.Total_Injured_Persons_Motorcyclists;
-        const total = Carros + Motos;
-        return { Carros, Motos, total, year: element.Year.slice(0, 4) };
+        const carros = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant;
+        const motos = element.Total_Injured_Persons_Motorcyclists;
+        const total = carros + motos;
+        return { carros, motos, total, year: element.Year.slice(0, 4) };
       });  
     });
 };
 
 const showTotalTable = (injuries) => {
   const totalInjuries = injuries.reduce((acc, cur) => ({
-    Carros: acc.Carros + cur.Carros,
-    Motos: acc.Motos + cur.Motos,
+    carros: acc.carros + cur.carros,
+    motos: acc.motos + cur.motos,
     total: acc.total + cur.total,
-  }), { Carros: 0, Motos: 0, total: 0 });
+  }), { carros: 0, motos: 0, total: 0 });
   
   document.getElementById("initial-total-results").innerHTML = `
-    <td>${totalInjuries.Carros}</td>
-    <td>${totalInjuries.Motos}</td>
+    <td>${totalInjuries.carros}</td>
+    <td>${totalInjuries.motos}</td>
     <td>${totalInjuries.total}</td>
   `;
 };
@@ -89,9 +89,9 @@ const search = () =>{
   
   const accidentsTotal = helpers.totalAccidents(period, selectTransport.value);
 
-  const allTableOrderChoice = checkRadioOfOrder();
-  // helpers.orderAccidents(tableBase, order, allTableOrderChoice);
-
+  const allTableOrderChoice = document.querySelector("input[name='hide-choice']:checked").value;
+  helpers.orderAccidents(period, order, selectTransport.value.toLowerCase(), allTableOrderChoice);
+  
   if (document.getElementById("error-message").textContent != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
   } else if (selectTransport.value == "total") {
@@ -101,20 +101,10 @@ const search = () =>{
   }
 };
 
-const checkRadioOfOrder = () =>{
-  if (document.getElementById("car-order-choice").checked) {
-    return "car";
-  } else if (document.getElementById("moto-order-choice").checked) {
-    return "moto";
-  } else if (document.getElementById("all-order-choice").checked) {
-    return "all";
-  }
-};
-
 const resultTable = (period, accidentsTotal, transport) =>{
   const hideChoice = document.getElementsByName("hide-choice");
   hideChoice.forEach(element => element.setAttribute("hidden", ""));
-  const rowsTemplate = period.map(element => `<tr><td>${element.year}</td><td>${element[transport]}</td></tr>`).join("");
+  const rowsTemplate = period.map(element => `<tr><td>${element.year}</td><td>${element[transport.toLowerCase()]}</td></tr>`).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${transport}</th>`;
   document.getElementById("t-body").innerHTML = `
@@ -134,7 +124,7 @@ const moreThanOneTable = (tableBase, totalAccidents) =>{
   };
 
   const rowsTemplate = tableBase.map(element => `
-  <tr><td>${element.year}</td><td>${element.Carros}</td><td>${element.Motos}</td><td>${element.total}</td></tr>
+  <tr><td>${element.year}</td><td>${element.carros}</td><td>${element.motos}</td><td>${element.total}</td></tr>
   `).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
@@ -147,8 +137,8 @@ const moreThanOneTable = (tableBase, totalAccidents) =>{
   ${rowsTemplate}
   <tr>
     <td class="total">Total</td>
-    <td class="total-accidents">${totalAccidents.Carros}</td>
-    <td class="total-accidents">${totalAccidents.Motos}</td>
+    <td class="total-accidents">${totalAccidents.carros}</td>
+    <td class="total-accidents">${totalAccidents.motos}</td>
     <td class="total-accidents">${totalAccidents.total}</td>
   </tr>
   `;  
@@ -186,6 +176,5 @@ window.addEventListener("load", () => {
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);
 document.getElementById("search").addEventListener("click", search);
-
 document.getElementById("average").addEventListener("click", averageGetter);
 document.getElementById("order").addEventListener("change", search);

@@ -31,7 +31,7 @@
             </div>
           </div>
             <select class="selector" name="transport" id="transport">
-            <option value=null disabled selected>Transporte</option>
+            <option value="null" disabled selected>Transporte</option>
             <option value="Carros">Carros</option>
             <option value="Motos">Motos</option>
             <option value="total">Todos</option>
@@ -39,11 +39,11 @@
           <button type="button" name="search" class="button" id="search">Buscar</button>
           <h2 class="title-nav" name="hide" id="order-title" hidden>Ordenar Acidentes</h2>
           <fieldset class="choice order">
-            <input type="radio" class="radio" name="hide-choice" value="car" id="car-order-choice" checked hidden>
+            <input type="radio" class="radio" name="hide-choice" value="carros" id="car-order-choice" checked hidden>
             <label for="all-order-choice" class="label-year" name="hide-choice" hidden>Carro</label>
-            <input type="radio" class="radio" name="hide-choice" value="moto" id="moto-order-choice" hidden>
+            <input type="radio" class="radio" name="hide-choice" value="motos" id="moto-order-choice" hidden>
             <label for="all-order-choice"  class="label-year" name="hide-choice" hidden>Moto</label>
-            <input type="radio" class="radio" name="hide-choice" value="all" id="all-order-choice" hidden>
+            <input type="radio" class="radio" name="hide-choice" value="total" id="all-order-choice" hidden>
             <label for="all-order-choice" class="label-year" name="hide-choice" hidden>Todos</label>
           </fieldset>
           <select class="selector sort" name="hide" id="order" hidden>
