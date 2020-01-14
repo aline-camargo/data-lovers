@@ -45,7 +45,9 @@ const orderAccidents = (tableBase, order, selectTransport, allTableOrderChoice) 
   }
 };
 
-export default {
+console.log("OIOIOI");
+
+export {
   filterPeriod,
   validatePeriod,
   totalAccidents,
