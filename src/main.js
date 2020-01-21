@@ -1,4 +1,9 @@
-import helpers from "./data.js";
+import { 
+  filterPeriod,
+  validatePeriod,
+  totalAccidents,
+  orderAccidents,
+  average } from "./data.js";
 
 const selectTransport = document.getElementById("transport");
 
@@ -74,7 +79,7 @@ const search = () =>{
   const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
 
   const injuries = JSON.parse(localStorage.getItem("injuries"));
-  const period = helpers.validatePeriod(injuries, initialYear, checkedFinalYear);
+  const period = validatePeriod(injuries, initialYear, checkedFinalYear);
 
   if (typeof period === "string") {
     document.getElementById("table-results").setAttribute("hidden", "");
@@ -87,10 +92,10 @@ const search = () =>{
     document.getElementById("error-message").textContent = "Escolha um transporte";
   }
   
-  const accidentsTotal = helpers.totalAccidents(period, selectTransport.value);
+  const accidentsTotal = totalAccidents(period, selectTransport.value);
 
   const allTableOrderChoice = document.querySelector("input[name='hide-choice']:checked").value;
-  helpers.orderAccidents(period, order, selectTransport.value.toLowerCase(), allTableOrderChoice);
+  orderAccidents(period, order, selectTransport.value.toLowerCase(), allTableOrderChoice);
   
   if (document.getElementById("error-message").textContent != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
@@ -150,13 +155,13 @@ const averageGetter = () =>{
   const divider = finalYear - initialYear + 1;
 
   if (selectTransport.value === "total") {
-    const totalDeAcidentes = Array.from(document.querySelectorAll(".total-accidents"));
-    const resultAverage = helpers.average(totalDeAcidentes, divider);
+    const totalDeAcidentes = Array.from(document.querySelectorAll(".total-accidents")).map(element => Number(element.textContent));
+    const resultAverage = average(totalDeAcidentes, divider);
     document.getElementById("t-body").innerHTML += `<tr><td class="total">Médias</td><td>${resultAverage[0]}</td>
       <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;      
   } else {
     const totalDeAcidentes = +document.querySelector("#totalDeAcidentes").textContent;
-    const resultAverage = helpers.average(totalDeAcidentes, divider);
+    const resultAverage = average(totalDeAcidentes, divider);
     document.getElementById("t-body").innerHTML += `<tr><td class="total">Média</td><td>${resultAverage}</td></tr>`;
   }
 };

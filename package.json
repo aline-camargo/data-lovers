@@ -4,9 +4,6 @@
   "main": "src/index.html",
   "license": "MIT",
   "scripts": {
-    "htmlhint": "htmlhint src/*.html test/*.html",
-    "eslint": "eslint --ext .js src/ test/ --fix",
-    "pretest": "npm run eslint && npm run htmlhint",
     "test": "jest --coverage",
     "start": "serve src/"
   },

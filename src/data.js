@@ -28,7 +28,7 @@ const average = (totalAccidents, divider) => {
   if (typeof totalAccidents === "number") {
     return parseInt(totalAccidents / divider);
   } else {
-    return totalAccidents.map(element => parseInt(+element.textContent/divider));
+    return totalAccidents.map(element => parseInt(element/divider));
   }
 };
 
@@ -44,8 +44,6 @@ const orderAccidents = (tableBase, order, selectTransport, allTableOrderChoice) 
     return tableBase.sort(compare);
   }
 };
-
-console.log("OIOIOI");
 
 export {
   filterPeriod,

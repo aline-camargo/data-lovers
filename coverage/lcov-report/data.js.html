@@ -20,28 +20,28 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">22.86% </span>
+        <span class="strong">91.18% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>8/35</span>
+        <span class='fraction'>31/34</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">3.45% </span>
+        <span class="strong">86.21% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>1/29</span>
+        <span class='fraction'>25/29</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">18.18% </span>
+        <span class="strong">90.91% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>2/11</span>
+        <span class='fraction'>10/11</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">28% </span>
+        <span class="strong">95.83% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>7/25</span>
+        <span class='fraction'>23/24</span>
       </div>
     </div>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line high'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet">1
 2
@@ -97,25 +97,23 @@
 52
 53
 54
-55
-56
-57</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+55</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">15x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -126,27 +124,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -155,23 +149,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const validatePeriod = <span class="fstat-no" title="function not covered" >(d</span>ata, initialYear, finalYear) =&gt; {
-<span class="cstat-no" title="statement not covered" >  if (initialYear === 0 || finalYear === 0) {</span>
-<span class="cstat-no" title="statement not covered" >    return "Caractere Inválido";</span>
-  } else <span class="cstat-no" title="statement not covered" >if (initialYear &lt; 2000 || finalYear &gt; 2015 || finalYear &lt; initialYear) {</span>
-<span class="cstat-no" title="statement not covered" >    return "Período Inválido";</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const validatePeriod = (data, initialYear, finalYear) =&gt; {
+  if (initialYear === 0 || finalYear === 0) {
+    return "Caractere Inválido";
+  } else if (initialYear &lt; 2000 || finalYear &gt; 2015 || finalYear &lt; initialYear) {
+    return "Período Inválido";
   } else {
-<span class="cstat-no" title="statement not covered" >    return filterPeriod(data, initialYear, finalYear);</span>
+    return filterPeriod(data, initialYear, finalYear);
   }
 };
 &nbsp;
 const filterPeriod = (data, initialYear, finalYear) =&gt; {
-  return data.filter(injurie =&gt; injurie.year &gt;= initialYear &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >injurie.year &lt;= finalYear)</span>;
+  return data.filter(injurie =&gt; injurie.year &gt;= initialYear &amp;&amp; injurie.year &lt;= finalYear);
 };
 &nbsp;
-const totalAccidents = <span class="fstat-no" title="function not covered" >(i</span>njurie, transport) =&gt; {
-<span class="cstat-no" title="statement not covered" >  if (transport != "total") {   </span>
-<span class="cstat-no" title="statement not covered" >    return injurie.reduce(<span class="fstat-no" title="function not covered" >(t</span>otal, accident) =&gt; <span class="cstat-no" title="statement not covered" >total + accident[transport.toLowerCase()],</span> 0);</span>
+const totalAccidents = (injurie, transport) =&gt; {
+  <span class="missing-if-branch" title="else path not taken" >E</span>if (transport != "total") {   
+    return injurie.reduce((total, accident) =&gt; total + accident[transport.toLowerCase()], 0);
   } else {
 <span class="cstat-no" title="statement not covered" >    return injurie.reduce(<span class="fstat-no" title="function not covered" >(a</span>cc, cur) =&gt; (<span class="cstat-no" title="statement not covered" >{</span></span>
       carros: acc.carros + cur.carros,
@@ -181,28 +177,26 @@ const totalAccidents = <span class="fstat-no" title="function not covered" >(i</
   }
 };
 &nbsp;
-const average = <span class="fstat-no" title="function not covered" >(t</span>otalAccidents, divider) =&gt; {
-<span class="cstat-no" title="statement not covered" >  if (typeof totalAccidents === "number") {</span>
-<span class="cstat-no" title="statement not covered" >    return parseInt(totalAccidents / divider);</span>
+const average = (totalAccidents, divider) =&gt; {
+  if (typeof totalAccidents === "number") {
+    return parseInt(totalAccidents / divider);
   } else {
-<span class="cstat-no" title="statement not covered" >    return totalAccidents.map(<span class="fstat-no" title="function not covered" >el</span>ement =&gt; <span class="cstat-no" title="statement not covered" >parseInt(+element.textContent/divider))</span>;</span>
+    return totalAccidents.map(element =&gt; parseInt(element/divider));
   }
 };
 &nbsp;
-const orderAccidents = <span class="fstat-no" title="function not covered" >(t</span>ableBase, order, selectTransport, allTableOrderChoice) =&gt;{
-  const selectOrder = <span class="cstat-no" title="statement not covered" >selectTransport === "total" ? allTableOrderChoice : selectTransport;</span>
+const orderAccidents = (tableBase, order, selectTransport, allTableOrderChoice) =&gt;{
+  const selectOrder = selectTransport === "total" ? allTableOrderChoice : <span class="branch-1 cbranch-no" title="branch not covered" >selectTransport;</span>
 &nbsp;
-  const compare = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>, b) =&gt;{<span class="cstat-no" title="statement not covered" >if (parseInt(a[selectOrder]) &lt; parseInt(b[selectOrder])) {<span class="cstat-no" title="statement not covered" >return 1;}</span> else {<span class="cstat-no" title="statement not covered" >return -1;}</span>}</span>;</span>
-  const compare2 =<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(a</span>, b) =&gt;{<span class="cstat-no" title="statement not covered" >if (parseInt(a[selectOrder]) &gt; parseInt(b[selectOrder])) {<span class="cstat-no" title="statement not covered" >return 1;}</span> else {<span class="cstat-no" title="statement not covered" >return -1;}</span>}</span>;</span>
+  const compare = (a, b) =&gt;{if (parseInt(a[selectOrder]) &lt; parseInt(b[selectOrder])) {return 1;} else {return -1;}};
+  const compare2 =(a, b) =&gt;{<span class="missing-if-branch" title="else path not taken" >E</span>if (parseInt(a[selectOrder]) &gt; parseInt(b[selectOrder])) {return 1;} else {<span class="cstat-no" title="statement not covered" >return -1;}</span>};
 &nbsp;
-<span class="cstat-no" title="statement not covered" >  if (order === "crescent" || order === "older") {</span>
-<span class="cstat-no" title="statement not covered" >    return tableBase.sort(compare2);</span>
-  } else <span class="cstat-no" title="statement not covered" >if (order === "decrescent" || order === "recent") {</span>
-<span class="cstat-no" title="statement not covered" >    return tableBase.sort(compare);</span>
+  if (order === "crescent" || order === "older") {
+    return tableBase.sort(compare2);
+  } else <span class="missing-if-branch" title="else path not taken" >E</span>if (order === "decrescent" || order === "recent") {
+    return tableBase.sort(compare);
   }
 };
-&nbsp;
-console.log("OIOIOI");
 &nbsp;
 export {
   filterPeriod,
@@ -217,7 +211,7 @@ export {
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 14 2020 20:19:17 GMT-0200 (Brasilia Summer Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Tue Jan 21 2020 20:23:55 GMT-0200 (Brasilia Summer Time)
 </div>
 </div>
 <script src="prettify.js"></script>
