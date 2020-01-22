@@ -1,106 +1,139 @@
 /* eslint camelcase: "off"*/
 
-const origin = require("../src/data.js");
+import {
+  filterPeriod,
+  validatePeriod,
+  totalAccidents,
+  orderAccidents,
+  average
+} from "../src/data.js";
 
-const arrDataYears = [{Year: "1960-01-04"}, {Year: "2000-01-04"}, {Year: "2001-01-04"}, {Year: "2019-01-04"}, {Year: "2011-01-04"}];
-const arrDataTransport = [{Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
-  {Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
-  {Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
+const arrDataYears = [
+  { total: 19841, motos: 636, carros: 205134609, year: "2000" },
+  { total: 19861, motos: 6036, carros: 209, year: "2001" },
+  { total: 1986861, motos: 60676, carros: 208, year: "2011" },
+  { total: 1986861, motos: 60436, carros: 2051609, year: "2019" },
+  { total: 19861, motos: 6236, carros: 20519, year: "1960" },
+];
+
 const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
-const arrayYears = ["1960", "2000", "2001", "2019", "2011"];
 
-describe("Testando filterPeriod", () =>{
-  test("Retorna um objeto", () =>{
-    expect(typeof origin.filterPeriod(arrDataYears, 2000, 2001)).toEqual("object");
+describe("Testando filterPeriod", () => {
+  test("É uma função", () => {
+    expect(typeof filterPeriod).toEqual("function");
   });
 
-  test("Retorna array filtrada", () => {
-    expect(origin.filterPeriod(arrDataYears, 2000, 2011)).toEqual([{Year: "2000-01-04"}, {Year: "2001-01-04"}, {Year: "2011-01-04"}]);
+  test("Retorna um objeto", () => {
+    expect(typeof filterPeriod(arrDataYears, 2000, 2001)).toEqual("object");
   });
 
-  test("Exibe mensagem quando year é letra", () =>{
-    expect(origin.filterPeriod(arrDataYears, 0, 2010)).toEqual("Caractere Inválido");
+  test("Retorna array com o período selecionado", () => {
+    expect(filterPeriod(arrDataYears, 2000, 2001)).toEqual([
+      { total: 19841, motos: 636, carros: 205134609, year: "2000" },
+      { total: 19861, motos: 6036, carros: 209, year: "2001" }
+    ]);
   });
 
-  test("Exibe mensagem quando initialYear é menor que 2000 ou finalYear é maior que 2015", () =>{
-    expect(origin.filterPeriod(arrDataYears, 1960, 2010)).toEqual("Período Inválido");
-  });
-
-  test("Período quando finalYear < initialYear", () => {
-    expect(origin.filterPeriod(arrDataYears, 2001, 2000)).toEqual("Período Inválido");
-  });
 });
 
-describe("Testando filterTransport", () =>{
-  test("Retorna um objeto", () =>{
-    expect(typeof origin.filterTransport(arrDataTransport, "Carro")).toEqual("object");
+describe("Testando validatePeriod", () => {
+  test("É uma função", () => {
+    expect(typeof validatePeriod).toEqual("function");
   });
 
-  test("Filtra por transporte", () =>{
-    expect(origin.filterTransport(arrDataTransport, "Carro")).toEqual([2051609, 1490238, 1396895]);
+  test("Retorna um objeto se período for válido", () => {
+    expect(typeof validatePeriod(arrDataYears, 2000, 2001)).toEqual("object");
   });
 
-  test("Exibe mensagem quando não é selecionado um transporte", () =>{
-    expect(origin.filterTransport(arrDataTransport, "identificator")).toEqual("Selecione um Transporte");
+  test("Retorna uma string se período não for válido", () => {
+    expect(typeof validatePeriod(arrDataYears, 20, 11)).toEqual("string");
   });
+
+  test("Retorna uma string se período for igual a 0", () => {
+    expect(validatePeriod(arrDataYears, 0, 11)).toEqual("Caractere Inválido");
+  });
+
 });
 
-describe("Testando totalAccidentsPeriodTransport", () =>{
-  test("Retorna um número", () =>{
-    expect(typeof origin.totalAccidentsPeriodTransport(arrayAcc)).toEqual("number");
+describe("Testando totalAccidents", () => {
+  test("É uma função", () => {
+    expect(typeof totalAccidents).toEqual("function");
   });
 
-  test("Pega total do Array", () =>{
-    expect(origin.totalAccidentsPeriodTransport(arrayAcc)).toEqual(3624832);
+  test("Retorna um número", () => {
+    expect(typeof totalAccidents(arrDataYears, "Carros")).toEqual("number");
   });
+
+  test("Retorna total de acidentes de apenas um transporte", () => {
+    expect(totalAccidents(arrDataYears, "Carros")).toEqual(207207154);
+  });
+
+  test("Retorna total de acidentes de todos os transportes", () => {
+    expect(totalAccidents(arrDataYears, "total")).toEqual({"carros": 207207154, "motos": 134020, "total": 4033285}    );
+  });
+
 });
 
-describe("Testando filterYears", () =>{
-  test("Retorna um objeto", () =>{
-    expect(typeof origin.filterYears(arrDataYears)).toEqual("object");
+describe("Testando orderAccidents", () => {
+  test("É uma função", () => {
+    expect(typeof orderAccidents).toEqual("function");
   });
 
-  test("Retorna array com os anos", ()=>{
-    expect(origin.filterYears(arrDataYears)).toEqual(["1960", "2000", "2001", "2019", "2011"]);
+  test("Retorna um objeto", () => {
+    expect(typeof orderAccidents(arrDataYears, "recent", "total", "carros")).toEqual("object");
   });
+
+  test("Ordena do mais recente para o mais antigo", () => {
+    expect(orderAccidents(arrDataYears, "recent", "total", "carros")).toEqual([
+      { "carros": 205134609, "motos": 636, "total": 19841, "year": "2000" },
+      { "carros": 2051609, "motos": 60436, "total": 1986861, "year": "2019" },
+      { "carros": 20519, "motos": 6236, "total": 19861, "year": "1960" },
+      { "carros": 209, "motos": 6036, "total": 19861, "year": "2001" },
+      { "carros": 208, "motos": 60676, "total": 1986861, "year": "2011" }
+    ]);
+  });
+
+  test("Ordena do mais recente para o mais antigo", () => {
+    expect(orderAccidents(arrDataYears, "decrescent", "total", "carros")).toEqual([
+      { "carros": 205134609, "motos": 636, "total": 19841, "year": "2000" },
+      { "carros": 2051609, "motos": 60436, "total": 1986861, "year": "2019" },
+      { "carros": 20519, "motos": 6236, "total": 19861, "year": "1960" },
+      { "carros": 209, "motos": 6036, "total": 19861, "year": "2001" },
+      { "carros": 208, "motos": 60676, "total": 1986861, "year": "2011" }
+    ]);
+  });
+
+  test("Ordena do mais antigo para o mais recente", () => {
+    expect(orderAccidents(arrDataYears, "older", "total", "carros")).toEqual([
+      {"carros": 208, "motos": 60676, "total": 1986861, "year": "2011"},
+      {"carros": 209, "motos": 6036, "total": 19861, "year": "2001"},
+      {"carros": 20519, "motos": 6236, "total": 19861, "year": "1960"},
+      {"carros": 2051609, "motos": 60436, "total": 1986861, "year": "2019"},
+      {"carros": 205134609, "motos": 636, "total": 19841, "year": "2000"}
+    ]);
+  });
+
+  test("Ordena do mais antigo para o mais recente", () => {
+    expect(orderAccidents(arrDataYears, "crescent", "motos", "carros")).toEqual([{"carros": 205134609, "motos": 636, "total": 19841, "year": "2000"}, {"carros": 209, "motos": 6036, "total": 19861, "year": "2001"}, {"carros": 20519, "motos": 6236, "total": 19861, "year": "1960"}, {"carros": 2051609, "motos": 60436, "total": 1986861, "year": "2019"}, {"carros": 208, "motos": 60676, "total": 1986861, "year": "2011"}]);
+  });
+
 });
 
-describe("Testando tableBaseMaker", () =>{
-  test("Retorna um objeto", () =>{
-    const arrDataYears = [{Year: "1960-01-04"}, {Year: "2000-01-04"}, {Year: "2001-01-04"}, {Year: "2019-01-04"}, {Year: "2011-01-04"}];
-    const arrDataTransport = [{Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
-      {Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
-      {Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
-    const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
-    const arrayYears = ["1960", "2000", "2001", "2019", "2011"];
-    expect(typeof origin.tableBaseMaker(arrayYears, arrayAcc, "Carro", arrDataYears)).toEqual("object");
+describe("Testando average", () => {
+  test("É uma função", () => {
+    expect(typeof average).toEqual("function");
   });
 
-  test("Retorna array c/ anos e acidentes", () =>{
-    const arrDataYears = [{Year: "1960-01-04"}, {Year: "2000-01-04"}, {Year: "2001-01-04"}, {Year: "2019-01-04"}, {Year: "2011-01-04"}];
-    const arrDataTransport = [{Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
-      {Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
-      {Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
-    const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
-    const arrayYears = ["1960", "2000", "2001", "2019", "2011"];
-    expect(origin.tableBaseMaker(arrayYears, arrayAcc, "Carro", arrDataYears)).toEqual([["1960", "2051609"], ["2000", "88652"], ["2001", "1378000"], ["2019", "18895"], ["2011", "87676"]]);
-  });
-});
-
-describe("Testando average", () =>{
-  test("Retorna um objeto se selectTransport = \"Todos\"", () =>{
-    expect(typeof origin.average(arrDataYears, 2001, 2004, "Todos")).toEqual("object");
+  test("Retorna um objeto", () => {
+    expect(typeof average(arrayAcc, 2)).toEqual("object");
   });
 
-  test("Retorna número selectTransport != \"Todos\"", () =>{
-    expect(typeof origin.average(arrDataYears, 2001, 2004, "Carro")).toEqual("number");
+  test("Retorna um objeto com as médias de mais de um transporte", () => {
+    expect(average(arrayAcc, 2)).toEqual([1025804, 44326, 689000, 9447, 43838]);
   });
 
-  test("Retorna array com médias por ano", () =>{
-    const testAverage = [{Year: "1960-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 2051609, Total_Injured_Persons_Passenger_Or_Occupant: null, Total_Injured_Persons_Motorcyclists: 57723},
-      {Year: "2000-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 1474536, Total_Injured_Persons_Passenger_Or_Occupant: 15702, Total_Injured_Persons_Motorcyclists: 88652},
-      {Year: "2011-01-04", Total_Injured_Persons_Passenger_Car_Occupants: 1378000, Total_Injured_Persons_Passenger_Or_Occupant: 18895, Total_Injured_Persons_Motorcyclists: 88000}];
-
-    expect(origin.average(testAverage, 2000, 2011, "Todos")).toEqual([1443566, 88326, 1531892]);
+  test("Retorna um objeto com as médias de um transporte", () => {
+    expect(average(1025804, 2)).toEqual(512902);
   });
+
 });

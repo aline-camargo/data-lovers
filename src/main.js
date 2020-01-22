@@ -1,181 +1,185 @@
-const injurieAccidents = INJURIES;
+import { 
+  filterPeriod,
+  validatePeriod,
+  totalAccidents,
+  orderAccidents,
+  average } from "./data.js";
 
-const initialTable = () =>{
-  const initialPeriod = app.filterPeriod(injurieAccidents, 2000, 2015);
-  const carAccidents = app.filterTransport(initialPeriod, "Carro");
-  const motoAccidents = app.filterTransport(initialPeriod, "Moto");
-  const totalCar = app.totalAccidentsPeriodTransport(carAccidents);
-  const totalMoto = app.totalAccidentsPeriodTransport(motoAccidents);
-  const accidentsTotal = totalCar + totalMoto;
-  document.getElementById("initial-total-results").innerHTML = `<td>${totalCar}</td>
-    <td>${totalMoto}</td><td>${accidentsTotal}</td>`;
+const selectTransport = document.getElementById("transport");
+
+const getInjuries = () => {
+  return fetch("https://raw.githubusercontent.com/aline-camargo/SAP003-data-lovers/master/src/data/injuries/injuries.json")
+    .then(response => response.json())
+    .then(data => {
+      const finalData = data.filter(injurie => {
+        const selectedYears = injurie.Year.slice(0, 4);
+        return selectedYears >= 2000 && selectedYears <= 2015;
+      });
+
+      return finalData.map(element => {
+        const carros = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant;
+        const motos = element.Total_Injured_Persons_Motorcyclists;
+        const total = carros + motos;
+        return { carros, motos, total, year: element.Year.slice(0, 4) };
+      });  
+    });
+};
+
+const showTotalTable = (injuries) => {
+  const totalInjuries = injuries.reduce((acc, cur) => ({
+    carros: acc.carros + cur.carros,
+    motos: acc.motos + cur.motos,
+    total: acc.total + cur.total,
+  }), { carros: 0, motos: 0, total: 0 });
+  
+  document.getElementById("initial-total-results").innerHTML = `
+    <td>${totalInjuries.carros}</td>
+    <td>${totalInjuries.motos}</td>
+    <td>${totalInjuries.total}</td>
+  `;
 };
 
 const disable = () =>{
   document.getElementById("final-year").setAttribute("disabled", "");
   document.getElementById("final-year-label").style.color = "grey";
-  document.getElementById("initial-year-label").innerHTML = "Ano";
+  document.getElementById("initial-year-label").textContent = "Ano";
 };
 
 const enable = () =>{
   document.getElementById("final-year").removeAttribute("disabled", "");
   document.getElementById("final-year-label").style.color = "white";
-  document.getElementById("initial-year-label").innerHTML = "Ano Inicial";
+  document.getElementById("initial-year-label").textContent = "Ano Inicial";
 };
 
-const checkRadio = (array, hideChoice, initialYear, finalYear) =>{
+const checkRadio = (adicionalFilters, initialYear, finalYear) =>{
   if (document.getElementById("one-year").checked) {
-    finalYear = initialYear;
-    for (let element of array) {
-      element.setAttribute("hidden", "");
-    };
+    adicionalFilters.forEach(element => element.setAttribute("hidden", ""));
+    return initialYear;
+  } else if (finalYear === initialYear) {
+    document.getElementById("error-message").textContent = "Selecione \"Apenas um ano\"";
+    adicionalFilters.forEach(element => element.setAttribute("hidden", ""));
   } else {
-    for (let element of array) {
-      element.removeAttribute("hidden", "");
-    };
-    if (finalYear === initialYear) {
-      document.getElementById("error-message").innerHTML = "Selecione \"Apenas um ano\"";
-      for (let element of array) {
-        element.setAttribute("hidden", "");
-      };
-    };
-  };
+    adicionalFilters.forEach(element => element.removeAttribute("hidden", ""));
+  }
   return finalYear;
 };
 
 const cleanMain = () => {
   document.getElementById("main-table").setAttribute("hidden", "");
-  document.getElementById("error-message").innerHTML = "";
+  document.getElementById("error-message").textContent = "";
 };
 
 const search = () =>{
   cleanMain();
 
-  const initialYear = Number(document.getElementById("initial-year").value);
-  const finalYear = Number(document.getElementById("final-year").value);
-  const selectTransport = document.getElementById("transport").value;
+  const initialYear = +document.getElementById("initial-year").value;
+  const finalYear = +document.getElementById("final-year").value;
   const order = document.getElementById("order").value;
   const hideElements = document.getElementsByName("hide");
-  const hideChoice = document.getElementsByName("hide-choice");
-  const checkedFinalYear = checkRadio(hideElements, hideChoice, initialYear, finalYear);
+  const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear);
 
-  const period = app.filterPeriod(injurieAccidents, initialYear, checkedFinalYear);
+  const injuries = JSON.parse(localStorage.getItem("injuries"));
+  const period = validatePeriod(injuries, initialYear, checkedFinalYear);
 
-  try {
-    if (period === "Caractere Inválido") throw "Caractere Inválido";
-    if (period === "Período Inválido") throw "Período Inválido";
-  } catch (error) {
+  if (typeof period === "string") {
     document.getElementById("table-results").setAttribute("hidden", "");
-    document.getElementById("error-message").innerHTML = error;
-    for (let element of hideElements) {
-      element.setAttribute("hidden", "");
-    };
-  };
+    hideElements.forEach(element => element.setAttribute("hidden", ""));
+    document.getElementById("error-message").textContent = period;
+  }
 
-  const periodAndTransport = app.filterTransport(period, selectTransport);
-  try {
-    if (periodAndTransport === "Selecione um Transporte") throw "Selecione um Transporte";
-  } catch (error) {
+  if (!selectTransport.value) {
     document.getElementById("table-results").setAttribute("hidden", "");
-    document.getElementById("error-message").innerHTML = error;
-    for (let element of hideElements) {
-      element.setAttribute("hidden", "");
-    };
-  };
+    document.getElementById("error-message").textContent = "Escolha um transporte";
+  }
+  
+  const accidentsTotal = totalAccidents(period, selectTransport.value);
 
-  const accidentsTotal = app.totalAccidentsPeriodTransport(periodAndTransport);
-  const years = app.filterYears(period);
-  const tableBase = app.tableBaseMaker(years, periodAndTransport, selectTransport, period);
-  const allTableOrderChoice = checkRadioOfOrder();
-
-  app.orderAccidents(tableBase, order, allTableOrderChoice);
-
-  if (document.getElementById("error-message").innerHTML != "") {
+  const allTableOrderChoice = document.querySelector("input[name='hide-choice']:checked").value;
+  orderAccidents(period, order, selectTransport.value.toLowerCase(), allTableOrderChoice);
+  
+  if (document.getElementById("error-message").textContent != "") {
     document.getElementById("table-results").setAttribute("hidden", "");
-    return;
-  };
-
-  if (selectTransport == "Todos") {
-    moreThanOneTable(tableBase, order);
+  } else if (selectTransport.value == "total") {
+    moreThanOneTable(period, accidentsTotal);
   } else {
-    resultTable(tableBase, accidentsTotal, selectTransport, order);
+    resultTable(period, accidentsTotal, selectTransport.value);
   }
 };
 
-const checkRadioOfOrder = () =>{
-  let allTableOrderChoice = "";
-
-  if (document.getElementById("car-order-choice").checked) {
-    allTableOrderChoice = "car";
-  } else if (document.getElementById("moto-order-choice").checked) {
-    allTableOrderChoice = "moto";
-  } else if (document.getElementById("all-order-choice").checked) {
-    allTableOrderChoice = "all";
-  }
-  return allTableOrderChoice;
-};
-
-const resultTable = (tableBase, accidentsTotal, selectTransport, order) =>{
-
+const resultTable = (period, accidentsTotal, transport) =>{
   const hideChoice = document.getElementsByName("hide-choice");
-  for (let element of hideChoice) {
-    element.setAttribute("hidden", "");
-  };
-
+  hideChoice.forEach(element => element.setAttribute("hidden", ""));
+  const rowsTemplate = period.map(element => `<tr><td>${element.year}</td><td>${element[transport.toLowerCase()]}</td></tr>`).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
-  document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${selectTransport}</th>`;
-  document.getElementById("t-body").innerHTML = "<tr class=\"main-table-subtitle\"><td>Ano</td><td>Número de Acidentes</td></tr>";
-
-  for (let index in tableBase) {
-    document.getElementById("t-body").innerHTML += `<tr><td>${tableBase[index][0]}</td><td>${tableBase[index][1]}</td></tr>`;
-  }
-  document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Total</td><td>${accidentsTotal}</td></tr>`;
+  document.getElementById("t-head").innerHTML = `<th colspan="2">Acidentes de ${transport}</th>`;
+  document.getElementById("t-body").innerHTML = `
+    <tr class="main-table-subtitle"><td>Ano</td><td>Número de Acidentes</td></tr>
+    ${rowsTemplate}
+    <tr><td class="total">Total</td><td id="totalDeAcidentes">${accidentsTotal}</td></tr>
+  `;
 };
 
-const moreThanOneTable = (tableBase, order) =>{
+const moreThanOneTable = (tableBase, totalAccidents) =>{
 
   const hideChoice = document.getElementsByName("hide-choice");
-  if(document.getElementById("one-year").checked){
-    for (let element of hideChoice) {
-      element.setAttribute("hidden", "");
-    };
+  if (document.getElementById("one-year").checked) {
+    hideChoice.forEach(element => element.setAttribute("hidden", ""));
   } else {
-    for (let element of hideChoice) {
-      element.removeAttribute("hidden", "");
-    };
+    hideChoice.forEach(element => element.removeAttribute("hidden", ""));
   };
 
-  document.getElementById("t-head").innerHTML = "";
-  document.getElementById("t-body").innerHTML = "";
+  const rowsTemplate = tableBase.map(element => `
+  <tr><td>${element.year}</td><td>${element.carros}</td><td>${element.motos}</td><td>${element.total}</td></tr>
+  `).join("");
   document.getElementById("table-results").removeAttribute("hidden", "");
   document.getElementById("t-head").innerHTML = "<th colspan=\"4\">Total de Acidentes</th>";
-  document.getElementById("t-body").innerHTML += `<tr class="main-table-subtitle"><td>Ano</td><td>Carro</td>
-    <td>Moto</td><td>Todos</td></tr>`;
-
-  for (let index in tableBase) {
-    document.getElementById("t-body").innerHTML += `<tr><td>${tableBase[index][0]}</td><td>${tableBase[index][1]}</td>
-      <td>${tableBase[index][2]}</td><td>${tableBase[index][3]}</td></tr>`;
-  }
+  document.getElementById("t-body").innerHTML = `
+  <tr class="main-table-subtitle">
+    <td>Ano</td><td>Carro</td>
+    <td>Moto</td>
+    <td>Todos</td>
+  </tr>
+  ${rowsTemplate}
+  <tr>
+    <td class="total">Total</td>
+    <td class="total-accidents">${totalAccidents.carros}</td>
+    <td class="total-accidents">${totalAccidents.motos}</td>
+    <td class="total-accidents">${totalAccidents.total}</td>
+  </tr>
+  `;  
 };
 
 const averageGetter = () =>{
-  const initialYear = Number(document.getElementById("initial-year").value);
-  const finalYear = Number(document.getElementById("final-year").value);
-  const selectTransport = document.getElementById("transport").value;
+  const initialYear = +document.getElementById("initial-year").value;
+  const finalYear = +document.getElementById("final-year").value;
+  const divider = finalYear - initialYear + 1;
 
-  const resultAverage = app.average(injurieAccidents, initialYear, finalYear, selectTransport);
-
-  if (selectTransport === "Todos") {
-    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Médias</td><td>${resultAverage[0]}</td>
-      <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;
+  if (selectTransport.value === "total") {
+    const totalDeAcidentes = Array.from(document.querySelectorAll(".total-accidents")).map(element => Number(element.textContent));
+    const resultAverage = average(totalDeAcidentes, divider);
+    document.getElementById("t-body").innerHTML += `<tr><td class="total">Médias</td><td>${resultAverage[0]}</td>
+      <td>${resultAverage[1]}</td><td>${resultAverage[2]}</td></tr>`;      
   } else {
-    document.getElementById("t-body").innerHTML += `<tr><td class=\"total\">Média</td><td>${resultAverage}</td></tr>`;
+    const totalDeAcidentes = +document.querySelector("#totalDeAcidentes").textContent;
+    const resultAverage = average(totalDeAcidentes, divider);
+    document.getElementById("t-body").innerHTML += `<tr><td class="total">Média</td><td>${resultAverage}</td></tr>`;
   }
 };
 
-window.addEventListener("load", initialTable);
-document.getElementById("average").addEventListener("click", averageGetter);
-document.getElementById("order").addEventListener("change", search);
-document.getElementById("search").addEventListener("click", search);
+window.addEventListener("load", () => {
+  const injuries = JSON.parse(localStorage.getItem("injuries"));
+  if (injuries) {
+    showTotalTable(injuries);
+  } else {
+    getInjuries()
+      .then(data => {
+        showTotalTable(data);
+        localStorage.setItem("injuries", JSON.stringify(data));
+      });
+  }
+});
 document.getElementById("one-year").addEventListener("change", disable);
 document.getElementById("period").addEventListener("change", enable);
+document.getElementById("search").addEventListener("click", search);
+document.getElementById("average").addEventListener("click", averageGetter);
+document.getElementById("order").addEventListener("change", search);
