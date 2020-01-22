@@ -9,11 +9,11 @@ import {
 } from "../src/data.js";
 
 const arrDataYears = [
-  { total: 19861, motos: 6236, carros: 20519, year: "1960" },
   { total: 19841, motos: 636, carros: 205134609, year: "2000" },
   { total: 19861, motos: 6036, carros: 209, year: "2001" },
+  { total: 1986861, motos: 60676, carros: 208, year: "2011" },
   { total: 1986861, motos: 60436, carros: 2051609, year: "2019" },
-  { total: 1986861, motos: 60676, carros: 208, year: "2011" }
+  { total: 19861, motos: 6236, carros: 20519, year: "1960" },
 ];
 
 const arrayAcc = [2051609, 88652, 1378000, 18895, 87676];
@@ -69,7 +69,7 @@ describe("Testando totalAccidents", () => {
   });
 
   test("Retorna total de acidentes de todos os transportes", () => {
-    expect(totalAccidents(arrDataYears, "Total")).toEqual(4033285);
+    expect(totalAccidents(arrDataYears, "total")).toEqual({"carros": 207207154, "motos": 134020, "total": 4033285}    );
   });
 
 });
@@ -93,6 +93,16 @@ describe("Testando orderAccidents", () => {
     ]);
   });
 
+  test("Ordena do mais recente para o mais antigo", () => {
+    expect(orderAccidents(arrDataYears, "decrescent", "total", "carros")).toEqual([
+      { "carros": 205134609, "motos": 636, "total": 19841, "year": "2000" },
+      { "carros": 2051609, "motos": 60436, "total": 1986861, "year": "2019" },
+      { "carros": 20519, "motos": 6236, "total": 19861, "year": "1960" },
+      { "carros": 209, "motos": 6036, "total": 19861, "year": "2001" },
+      { "carros": 208, "motos": 60676, "total": 1986861, "year": "2011" }
+    ]);
+  });
+
   test("Ordena do mais antigo para o mais recente", () => {
     expect(orderAccidents(arrDataYears, "older", "total", "carros")).toEqual([
       {"carros": 208, "motos": 60676, "total": 1986861, "year": "2011"},
@@ -102,6 +112,11 @@ describe("Testando orderAccidents", () => {
       {"carros": 205134609, "motos": 636, "total": 19841, "year": "2000"}
     ]);
   });
+
+  test("Ordena do mais antigo para o mais recente", () => {
+    expect(orderAccidents(arrDataYears, "crescent", "motos", "carros")).toEqual([{"carros": 205134609, "motos": 636, "total": 19841, "year": "2000"}, {"carros": 209, "motos": 6036, "total": 19861, "year": "2001"}, {"carros": 20519, "motos": 6236, "total": 19861, "year": "1960"}, {"carros": 2051609, "motos": 60436, "total": 1986861, "year": "2019"}, {"carros": 208, "motos": 60676, "total": 1986861, "year": "2011"}]);
+  });
+
 });
 
 describe("Testando average", () => {

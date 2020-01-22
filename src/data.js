@@ -40,7 +40,7 @@ const orderAccidents = (tableBase, order, selectTransport, allTableOrderChoice) 
 
   if (order === "crescent" || order === "older") {
     return tableBase.sort(compare2);
-  } else if (order === "decrescent" || order === "recent") {
+  } else {
     return tableBase.sort(compare);
   }
 };
