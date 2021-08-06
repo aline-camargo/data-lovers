@@ -1,28 +1,26 @@
-import { 
-  filterPeriod,
+import {
   validatePeriod,
   totalAccidents,
   orderAccidents,
-  average } from "./data.js"
+  average
+} from "./data.js"
 
 const selectTransport = document.getElementById("transport")
 
-const getInjuries = () => {
-  return fetch("https://raw.githubusercontent.com/aline-camargo/SAP003-data-lovers/master/src/data/injuries/injuries.json")
-    .then(response => response.json())
-    .then(data => {
-      const finalData = data.filter(injurie => {
-        const selectedYears = injurie.Year.slice(0, 4)
-        return selectedYears >= 2000 && selectedYears <= 2015
-      })
+const getInjuries = async () => {
+  const response = await fetch("https://raw.githubusercontent.com/aline-camargo/data-lovers/master/src/data/injuries/injuries.json")
 
-      return finalData.map(element => {
-        const carros = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant
-        const motos = element.Total_Injured_Persons_Motorcyclists
-        const total = carros + motos
-        return { carros, motos, total, year: element.Year.slice(0, 4) }
-      })  
-    })
+  const finalData = response.filter(injurie => {
+    const selectedYears = injurie.Year.slice(0, 4)
+    return selectedYears >= 2000 && selectedYears <= 2015
+  })
+
+  return finalData.map(element => {
+    const carros = element.Total_Injured_Persons_Passenger_Car_Occupants + element.Total_Injured_Persons_Passenger_Or_Occupant
+    const motos = element.Total_Injured_Persons_Motorcyclists
+    const total = carros + motos
+    return { carros, motos, total, year: element.Year.slice(0, 4) }
+  })
 }
 
 const showTotalTable = (injuries) => {
@@ -31,7 +29,7 @@ const showTotalTable = (injuries) => {
     motos: acc.motos + cur.motos,
     total: acc.total + cur.total,
   }), { carros: 0, motos: 0, total: 0 })
-  
+
   document.getElementById("initial-total-results").innerHTML = `
     <td>${totalInjuries.carros}</td>
     <td>${totalInjuries.motos}</td>
@@ -39,16 +37,20 @@ const showTotalTable = (injuries) => {
   `
 }
 
-const disable = () => {
-  document.getElementById("final-year").setAttribute("disabled", "")
-  document.getElementById("final-year-label").style.color = "grey"
-  document.getElementById("initial-year-label").textContent = "Ano"
-}
+const toggleYears = (isDisable = true) => {
+  const finalYearElement = document.getElementById("final-year")
+  const finalYearLabelElement = document.getElementById("final-year-label")
+  const initialYearLabelElement = document.getElementById("initial-year-label")
+  if (isDisable) {
+    finalYearElement.setAttribute("disabled", "")
+    finalYearLabelElement.style.color = "grey"
+    initialYearLabelElement.textContent = "Ano"
+    return
+  }
 
-const enable = () => {
-  document.getElementById("final-year").removeAttribute("disabled", "")
-  document.getElementById("final-year-label").style.color = "white"
-  document.getElementById("initial-year-label").textContent = "Ano Inicial"
+  finalYearElement.removeAttribute("disabled", "")
+  finalYearLabelElement.style.color = "white"
+  initialYearLabelElement.textContent = "Ano Inicial"
 }
 
 const checkRadio = (initialYear, finalYear) => {
@@ -177,21 +179,19 @@ const averageGetter = () => {
   }
 }
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
   const injuries = JSON.parse(localStorage.getItem("injuries"))
   if (injuries) {
     showTotalTable(injuries)
   } else {
-    getInjuries()
-      .then(data => {
-        showTotalTable(data)
-        localStorage.setItem("injuries", JSON.stringify(data))
-      })
+    const data = await getInjuries()
+    showTotalTable(data)
+    localStorage.setItem("injuries", JSON.stringify(data))
   }
 })
 
-document.getElementById("one-year").addEventListener("change", disable)
-document.getElementById("period").addEventListener("change", enable)
+document.getElementById("one-year").addEventListener("change", toggleYears)
+document.getElementById("period").addEventListener("change", () => toggleYears(false))
 document.getElementById("search").addEventListener("click", search)
 document.getElementById("average").addEventListener("click", averageGetter)
 document.getElementById("order").addEventListener("change", search)
