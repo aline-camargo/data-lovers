@@ -149,7 +149,8 @@ body{
   text-align: center;
 }
 .selector{
-  margin-left: 30%;
+  display: block;
+  margin: 0 33%;
   font-family: "Prompt", sans-serif;
   width: 33%;
   margin-top: 4%;

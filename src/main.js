@@ -39,29 +39,39 @@ const showTotalTable = (injuries) => {
   `
 }
 
-const disable = () =>{
+const disable = () => {
   document.getElementById("final-year").setAttribute("disabled", "")
   document.getElementById("final-year-label").style.color = "grey"
   document.getElementById("initial-year-label").textContent = "Ano"
 }
 
-const enable = () =>{
+const enable = () => {
   document.getElementById("final-year").removeAttribute("disabled", "")
   document.getElementById("final-year-label").style.color = "white"
   document.getElementById("initial-year-label").textContent = "Ano Inicial"
 }
 
-const checkRadio = (adicionalFilters, initialYear, finalYear) =>{
+const checkRadio = (initialYear, finalYear) => {
   if (document.getElementById("one-year").checked) {
-    adicionalFilters.forEach(element => element.setAttribute("hidden", ""))
+    toggleSection()
     return initialYear
   } else if (finalYear === initialYear) {
     document.getElementById("error-message").textContent = "Selecione \"Apenas um ano\""
-    adicionalFilters.forEach(element => element.setAttribute("hidden", ""))
+    toggleSection()
   } else {
-    adicionalFilters.forEach(element => element.removeAttribute("hidden", ""))
+    toggleSection(false)
   }
   return finalYear
+}
+
+const toggleSection = (hide = true) => {
+  const hideSection = document.getElementById("hide")
+  if (hide) {
+    hideSection.setAttribute("hidden", "")
+    return
+  }
+
+  hideSection.removeAttribute("hidden", "")
 }
 
 const cleanMain = () => {
@@ -69,27 +79,28 @@ const cleanMain = () => {
   document.getElementById("error-message").textContent = ""
 }
 
-const search = () =>{
+const search = () => {
   cleanMain()
 
   const initialYear = +document.getElementById("initial-year").value
   const finalYear = +document.getElementById("final-year").value
   const order = document.getElementById("order").value
-  const hideElements = document.getElementsByName("hide")
-  const checkedFinalYear = checkRadio(hideElements, initialYear, finalYear)
+  const checkedFinalYear = checkRadio(initialYear, finalYear)
 
   const injuries = JSON.parse(localStorage.getItem("injuries"))
   const period = validatePeriod(injuries, initialYear, checkedFinalYear)
 
   if (typeof period === "string") {
     document.getElementById("table-results").setAttribute("hidden", "")
-    hideElements.forEach(element => element.setAttribute("hidden", ""))
+    toggleSection()
     document.getElementById("error-message").textContent = period
+    return
   }
 
   if (!selectTransport.value) {
     document.getElementById("table-results").setAttribute("hidden", "")
     document.getElementById("error-message").textContent = "Escolha um transporte"
+    return
   }
   
   const accidentsTotal = totalAccidents(period, selectTransport.value)
@@ -106,7 +117,7 @@ const search = () =>{
   }
 }
 
-const resultTable = (period, accidentsTotal, transport) =>{
+const resultTable = (period, accidentsTotal, transport) => {
   const hideChoice = document.getElementsByName("hide-choice")
   hideChoice.forEach(element => element.setAttribute("hidden", ""))
   const rowsTemplate = period.map(element => `<tr><td>${element.year}</td><td>${element[transport.toLowerCase()]}</td></tr>`).join("")
@@ -119,7 +130,7 @@ const resultTable = (period, accidentsTotal, transport) =>{
   `
 }
 
-const moreThanOneTable = (tableBase, totalAccidents) =>{
+const moreThanOneTable = (tableBase, totalAccidents) => {
 
   const hideChoice = document.getElementsByName("hide-choice")
   if (document.getElementById("one-year").checked) {
@@ -149,7 +160,7 @@ const moreThanOneTable = (tableBase, totalAccidents) =>{
   `  
 }
 
-const averageGetter = () =>{
+const averageGetter = () => {
   const initialYear = +document.getElementById("initial-year").value
   const finalYear = +document.getElementById("final-year").value
   const divider = finalYear - initialYear + 1
@@ -178,6 +189,7 @@ window.addEventListener("load", () => {
       })
   }
 })
+
 document.getElementById("one-year").addEventListener("change", disable)
 document.getElementById("period").addEventListener("change", enable)
 document.getElementById("search").addEventListener("click", search)

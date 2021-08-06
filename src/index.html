@@ -30,35 +30,37 @@
               <input type="number" name="final-year" class="year-input" min="2000" max="2015" id="final-year">
             </div>
           </div>
-            <select class="selector" name="transport" id="transport">
-            <option value="null" disabled selected>Transporte</option>
+          <label for="transport" class="years-labels">Transporte</label>
+          <select class="selector" name="transport" id="transport">
+            <option value="total" selected>Todos</option>
             <option value="Carros">Carros</option>
             <option value="Motos">Motos</option>
-            <option value="total">Todos</option>
           </select>
           <button type="button" name="search" class="button" id="search">Buscar</button>
-          <h2 class="title-nav" name="hide" id="order-title" hidden>Ordenar Acidentes</h2>
-          <fieldset class="choice order">
-            <input type="radio" class="radio" name="hide-choice" value="carros" id="car-order-choice" checked hidden>
-            <label for="all-order-choice" class="label-year" name="hide-choice" hidden>Carro</label>
-            <input type="radio" class="radio" name="hide-choice" value="motos" id="moto-order-choice" hidden>
-            <label for="all-order-choice"  class="label-year" name="hide-choice" hidden>Moto</label>
-            <input type="radio" class="radio" name="hide-choice" value="total" id="all-order-choice" hidden>
-            <label for="all-order-choice" class="label-year" name="hide-choice" hidden>Todos</label>
-          </fieldset>
-          <select class="selector sort" name="hide" id="order" hidden>
-            <option value="title" disabled selected>Ordenar</option>
-            <optgroup label="Por Ano">
-              <option value="recent">Crescente</option>
-              <option value="older">Decrescente</option>
-            </optgroup>
-            <optgroup label="Por Acidentes">
-              <option value="crescent">Crescente</option>
-              <option value="decrescent">Decrescente</option>
-            </optgroup>
-          </select>
-          <h2 name="hide" class="title-nav" id="average-title" hidden>Média de Acidentes por Ano</h2>
-          <button type="button" name="hide" class="button" id="average" hidden>Buscar</button>
+          <section id="hide" hidden>
+            <h2 class="title-nav" id="order-title">Ordenar Acidentes</h2>
+            <fieldset class="choice order">
+              <input type="radio" class="radio" name="hide-choice" value="carros" id="car-order-choice" checked>
+              <label for="all-order-choice" class="label-year" name="hide-choice">Carro</label>
+              <input type="radio" class="radio" name="hide-choice" value="motos" id="moto-order-choice">
+              <label for="all-order-choice"  class="label-year" name="hide-choice">Moto</label>
+              <input type="radio" class="radio" name="hide-choice" value="total" id="all-order-choice">
+              <label for="all-order-choice" class="label-year" name="hide-choice">Todos</label>
+            </fieldset>
+            <select class="selector sort" id="order">
+              <option value="title" disabled selected>Ordenar</option>
+              <optgroup label="Por Ano">
+                <option value="recent">Crescente</option>
+                <option value="older">Decrescente</option>
+              </optgroup>
+              <optgroup label="Por Acidentes">
+                <option value="crescent">Crescente</option>
+                <option value="decrescent">Decrescente</option>
+              </optgroup>
+            </select>
+            <h2 class="title-nav" id="average-title">Média de Acidentes por Ano</h2>
+            <button type="button" class="button" id="average">Buscar</button>
+        </section>
         </form>
       </nav>
       <main class="main">
