@@ -26,17 +26,17 @@ const totalAccidents = (injurie, transport) => {
 
 const average = (totalAccidents, divider) => {
   if (typeof totalAccidents === "number") {
-    return parseInt(totalAccidents / divider)
+    return +(totalAccidents / divider)
   } else {
-    return totalAccidents.map(element => parseInt(element/divider))
+    return totalAccidents.map(element => +(element/divider))
   }
 }
 
 const orderAccidents = (tableBase, order, selectTransport, allTableOrderChoice) =>{
   const selectOrder = selectTransport === "total" ? allTableOrderChoice : selectTransport
 
-  const compare = (a, b) =>{if (parseInt(a[selectOrder]) < parseInt(b[selectOrder])) {return 1} else {return -1}}
-  const compare2 =(a, b) =>{if (parseInt(a[selectOrder]) > parseInt(b[selectOrder])) {return 1} else {return -1}}
+  const compare = (a, b) =>{if (+(a[selectOrder]) < +(b[selectOrder])) {return 1} else {return -1}}
+  const compare2 =(a, b) =>{if (+(a[selectOrder]) > +(b[selectOrder])) {return 1} else {return -1}}
 
   if (order === "crescent" || order === "older") {
     return tableBase.sort(compare2)
